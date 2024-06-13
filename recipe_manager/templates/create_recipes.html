@@ -1,0 +1,98 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container">
+    <main class="box border mx-auto p-5  mb-1"> <!--mx-auto for aligning items to center-->
+        <section>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="titlebar mb-4">
+                    <h3 style="color: rgb(97, 189, 77)">Create Your Own Recipes</h3>
+                    <h5>Uploading personal recipes is easy Add yours to your favorites, share with friends, family, or the LoveRecipes community.</h5>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="left-side me-5" style="width: 62%;">
+                        <div class="form-group mb-3">
+                            <label class="fs-5" for="formGroupExampleInput">Recipe Title</label>
+                            {{ form.title }}
+                            
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="fs-5" for="formGroupExampleInput2">Description</label>
+                            {{ form.description }}
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <label class="mb-2 fs-5" for="formGroupExampleInput3">Add Image</label>
+                        <label for="image-upload" class="image-upload-label" >
+                            {{form.image}}
+                            <img src="https://placehold.co/200x200" alt="" class="img-thumbnail mb-2" style="max-height: 250px" id="file-preview" />
+                        </label>
+                    </div>
+                </div>
+                <br>
+
+                <div id="ingredientcontainer">
+                    <div class="form-group mb-3">
+                        <label class="fs-5" for="formGroupExampleInput mb-3">Ingredients</label>
+                        <input type="text" class="form-control" name="ingredients" placeholder="e.g. 2 cups flour">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="ingredients" placeholder="e.g. 1 spoon sugar">
+                    </div>
+                </div>
+                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addIngredientBtn"> <i class="ph-bold ph-plus"></i>Add Ingredient</button>
+                <br>
+                <div id="directioncontainer">
+                    <div class="form-group mb-3">
+                        <label class="fs-5" for="formGroupExampleInput">Directions</label>
+                        <input type="text" class="form-control" name="directions" placeholder="e.g. Preheat oven to 200 degrees.....">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="directions" placeholder="e.g. Mix all ingredients in a bowl.....">
+                    </div>
+                </div>
+                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addDirectionBtn"> <i class="ph-bold ph-plus"></i>Add Steps</button>
+                <br>
+
+                <div class="form-group mb-3">
+                    <div class="row">
+                        <div class="col">
+                            <label class="mb-2 fs-5" for="formGroupExampleInput3">Preparation Time (in mins)</label>
+                            {{form.time_required}}
+                        </div>
+
+                        <div class="col">
+                            <label class="mb-2 fs-5" for="formGroupExampleInput3">Servings</label>
+                            {{form.servings}}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tagcontainer">
+                    <div class="form-group mb-3">
+                        <label class="fs-5" for="formGroupExampleInput mb-3">Tags</label>
+                        <input type="text" class="form-control tag-input" name="tags" placeholder="e.g. gluten-free">
+                    </div>
+                </div>
+
+                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addTagBtn"> <i class="ph-bold ph-plus"></i>Add Tags</button>
+
+                <div>
+                    <button type="button" class="button btn-success mt-4" onclick="reset()">Cancel</button>
+
+                    <button type="submit" class="button btn-success mt-4">Submit Recipe</button>
+
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

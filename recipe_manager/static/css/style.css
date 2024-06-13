@@ -1,0 +1,47 @@
+.box {
+    width: 60%;
+    background-color: white;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.button {
+    background-color: rgb(97, 189, 77);
+    border: none;
+    border-radius: 7px;
+    padding: 7px;
+}
+
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.ingredient-input {
+    width: 95%;
+}
+
+.direction-input {
+    width: 95%;
+}
+
+.tag-input {
+    width: 95%;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+}

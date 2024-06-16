@@ -5,7 +5,7 @@ import json
 class Recipe(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='recipes')
+    image = models.ImageField(upload_to='images/')
     ingredients = models.TextField()
     directions = models.TextField()
     time_required = models.TextField()

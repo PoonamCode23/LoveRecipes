@@ -92,6 +92,22 @@ document.getElementById('addTagBtn').addEventListener('click', function() {
     newTagField.appendChild(deleteIcon);
     container.appendChild(newTagField);
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const descriptionField = document.querySelector('textarea[name="description"]');
+    const charCount = document.getElementById('charCount');
+    const maxChars = 130;
+
+    function updateCharCount() {
+        const remaining = maxChars - descriptionField.value.length;
+        charCount.textContent = `${remaining} characters remaining.`;
+    }
+
+    descriptionField.addEventListener('input', updateCharCount);
+    updateCharCount();  
+});
+
 function resetForm() {
     document.querySelector('form').reset();
     document.getElementById('file-preview').src = 'https://placehold.co/200x200';

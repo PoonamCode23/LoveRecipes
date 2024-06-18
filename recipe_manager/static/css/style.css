@@ -3,11 +3,6 @@
     background-color: white;
 }
 
-.error-message {
-    color: red;
-    font-size: 14px;
-}
-
 .button {
     background-color: rgb(97, 189, 77);
     border: none;
@@ -45,3 +40,5 @@ body {
     transform: translateY(-50%);
     font-size: 14px;
 }
+
+

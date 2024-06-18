@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import MaxLengthValidator
 from .models import Recipe
 
 
@@ -6,10 +7,18 @@ class RecipeForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
+
     description = forms.CharField(
         widget=forms.Textarea(
-            attrs={'class': 'form-control', 'style': 'height: 160px; resize: vertical;'})
+            attrs={
+                'class': 'form-control',
+                'style': 'height: 160px; resize: vertical;',
+                'maxlength': 130
+            }
+        ),
+        validators=[MaxLengthValidator(150)]
     )
+
     image = forms.ImageField(
         widget=forms.FileInput(attrs={
             'id': 'image-upload',

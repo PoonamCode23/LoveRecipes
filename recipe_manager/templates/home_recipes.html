@@ -31,20 +31,59 @@
                             </a>
                             <form method="post" action="" id="delete-recipe-{{ recipe.id }}">
                                 {% csrf_token %}
-                                 style="color: red; position: absolute; bottom: 4px; right: 30px;">
-                                    <i class="ph-bold ph-trash"></i>
-                                </button>
+                                <button type="submit"  class="btn" style=" color: red; position: absolute; bottom: 4px;  right: 30px;"> <i class="ph-bold ph-trash"></i> </button>       
+            
                             </form>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             {% else %}
-                <p>No recipes has been uploaded.</p>
+                <p>No recipes have been uploaded.</p>
             {% endif %}
         </div>
     </section>
 </main>
 
+<style>
+    .button {
+        color: white;
+        background-color: rgb(97, 189, 77);
+        position: absolute;
+        text-decoration: none;
+        transition: box-shadow 0.4s ease;
+        padding: 5px 15px;
+        border-radius: 5px;
+    }
 
+    .button:hover {
+        box-shadow: 3px 4px 6px rgb(97, 189, 77);
+    }
+
+    .card {
+        transition: box-shadow 0.4s ease;
+    }
+
+    .card:hover {
+        box-shadow: 3px 4px 6px rgb(97, 189, 77);
+    }
+
+    .card-text {
+        text-align: justify;
+    }
+
+    .tags {
+        padding: 2px 8px;
+        margin: 0 5px 5px 0;
+        border: none;
+        border-radius: 8px;
+        background-color: #f1f1f1;
+    }
+
+    .tags:hover {
+        background-color: black;
+        color: white;
+    }
+</style>
 {% endblock %}
+<!--endblock at the end so css effects can be seen-->

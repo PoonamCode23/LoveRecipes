@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RecipeForm
 from .models import Recipe
 import json
@@ -43,3 +43,19 @@ def view_recipes(request):
         recipe_list.append(recipe_data)
 
     return render(request, 'home_recipes.html', {'recipes': recipe_list})
+
+
+def recipe_details(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+
+    # Assuming ingredients and directions are stored as JSONField in Recipe model
+    ingredients = json.loads(recipe.ingredients)
+    directions = json.loads(recipe.directions)
+
+    context = {
+        'recipe': recipe,
+        'ingredients': ingredients,
+        'directions': directions,
+    }
+
+    return render(request, 'recipe_details.html', context)

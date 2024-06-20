@@ -7,4 +7,8 @@ urlpatterns = [
     path('upload_recipes/', views.upload_recipe, name='create'),
     path('', views.view_recipes, name='view_recipes'),
 
+    path('recipe_details/<int:recipe_id>/',
+         views.recipe_details, name='recipe_details'),
+
+
 ]

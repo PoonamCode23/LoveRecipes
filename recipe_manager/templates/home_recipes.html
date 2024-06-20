@@ -25,7 +25,12 @@
                                 </form>
                                 {% endfor %}
                             </div>
-                            <a href="" class="button start-1 bottom-0 mb-3">Full Recipe</a>
+                         
+                          
+                            <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
+
+
+
                             <a href="" style="text-decoration: none; position: absolute; bottom: 10px; right: 10px;">
                                 <i class="ph-bold ph-pencil"></i>
                             </a>

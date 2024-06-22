@@ -53,37 +53,20 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-
-
-
 
 
 
 
 <style>
+   
     .image-banner {
         width: 100%;
-        height: 550px;
+        height: 530px;
         object-fit: cover;
         margin-bottom: 30px;
 
     }
 
-    .button {
-        background-color: coral;
-        border: none;
-        border-radius: 7px;
-        padding: 5px;
-    }
-
-    .editicon {
-        color: coral;
-        border: none;
-        background-color: transparent;
-
-    }
 
     .text {
         font-size: 20px;
@@ -92,10 +75,6 @@
 
     .link {
         color: black;
-    }
-
-    a:hover {
-        color: coral;
     }
 
     .receipe-duration {
@@ -110,73 +89,6 @@
         margin-right: 10px;
     }
 
-    .step {
-        font-size: 23px;
-    }
-
-    .label {
-        font-size: 20px;
-    }
-
-    .custom-checkbox .form-check-input:checked+.label {
-        color: green;
-    }
-
-    .rating {
-        unicode-bidi: bidi-override;
-        direction: rtl;
-        display: block;
-        width: 100%;
-        text-align: left;
-    }
-
-
-    .star {
-        display: inline-block;
-        font-size: 40px;
-        color: #ccc;
-        cursor: pointer;
-    }
-
-    .star1 {
-        display: inline-block;
-        font-size: 40px;
-        color: #ccc;
-    }
-
-    .star:hover,
-    .star:hover~.star {
-        color: coral;
-    }
-
-
-    .star.checked,
-    .star.checked~.star {
-        color: coral;
-    }
-
-    .star1.checked,
-    .star1.checked~.star1 {
-        color: coral;
-    }
-
-    .star2 {
-        display: inline-block;
-        font-size: 40px;
-        color: #ccc;
-        cursor: pointer;
-    }
-
-    .star2:hover,
-    .star2:hover~.star2 {
-        color: coral;
-    }
-
-    .star2.checked,
-    .star2.checked~.star2 {
-        color: coral;
-    }
-
     .form-check-input:checked {
         background-color: green !important;
         outline: none;
@@ -187,27 +99,21 @@
         box-shadow: none !important;
     }
 
-    .thumbs-up-icon {
-        color: grey;
-        font-size: 30px;
-    }
 
-    .like-button {
-        border: none;
-        background-color: transparent;
-
-    }
-
-    .like-button:hover,
-    .like-button:hover~.like-button {
-        color: coral;
+    .custom-checkbox .form-check-input:checked+.label {
+        color: green;
     }
 
 
-    .like-button.checked,
-    .like-button.checked~.like-button {
-        color: coral;
+    .step {
+        font-size: 23px;
     }
+
+    .label {
+        font-size: 20px;
+    }
+   
 </style>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-@endsection
+{% endblock %}

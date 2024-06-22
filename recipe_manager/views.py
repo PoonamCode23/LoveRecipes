@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RecipeForm
 from .models import Recipe
@@ -29,10 +30,14 @@ def upload_recipe(request):
 def view_recipes(request):
 
     # Fetch random recipes
-    recipes = Recipe.objects.order_by('?')[:15]
+    recipes = Recipe.objects.order_by('?')
+
+    paginator = Paginator(recipes, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     recipe_list = []
-    for recipe in recipes:
+    for recipe in page_obj:
         recipe_data = {
             'id': recipe.id,
             'image': recipe.image,
@@ -42,7 +47,7 @@ def view_recipes(request):
         }
         recipe_list.append(recipe_data)
 
-    return render(request, 'home_recipes.html', {'recipes': recipe_list})
+    return render(request, 'home_recipes.html', {'recipes': recipe_list, 'page_obj': page_obj})
 
 
 def recipe_details(request, recipe_id):

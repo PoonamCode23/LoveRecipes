@@ -43,3 +43,138 @@ body {
 
 
 /*for home page*/
+.button {
+    color: white;
+    background-color: rgb(97, 189, 77);
+    position: absolute;
+    text-decoration: none;
+    transition: box-shadow 0.4s ease;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.button:hover {
+    box-shadow: 3px 4px 6px rgb(97, 189, 77);
+}
+
+.card {
+    transition: box-shadow 0.4s ease;
+}
+
+.card:hover {
+    box-shadow: 3px 4px 6px rgb(97, 189, 77);
+}
+
+.card-text {
+    text-align: justify;
+}
+
+.tags {
+    padding: 2px 8px;
+    margin: 0 5px 5px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+}
+
+.tags:hover {
+    background-color: black;
+    color: white;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: 5px;
+}
+.pagination a, .pagination span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 4px 8px;
+    text-decoration: none;
+    font-size: 1.0em;
+    color: #333;
+}
+/* .pagination a{
+    background-color: rgb(237, 114, 173);
+} */
+
+.pagination a:hover {
+    background-color: lightgreen; 
+}
+.pagination span.current-page {
+    border: none;
+    margin: 0 10px;
+    font-size: 1.0em;
+    color: #333;
+}
+.pagination span.current-page strong {
+    padding-left: 8px;
+
+}
+
+/*for recipe details page*/
+.image-banner {
+    width: 100%;
+    height: 530px;
+    object-fit: cover;
+    margin-bottom: 30px;
+
+}
+
+.text {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.link {
+    color: black;
+}
+
+.receipe-duration {
+    border-left: 3px solid #40ba37;
+    padding: 15px;
+}
+
+.form-check-input {
+    width: 25px !important;
+    height: 25px !important;
+    border: 1px solid black !important;
+    margin-right: 10px;
+}
+
+.form-check-input:checked {
+    background-color: green !important;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-check-input:focus {
+    box-shadow: none !important;
+}
+
+
+.custom-checkbox .form-check-input:checked+.label {
+    color: green;
+}
+
+
+.step {
+    font-size: 23px;
+}
+
+.label {
+    font-size: 20px;
+}
+

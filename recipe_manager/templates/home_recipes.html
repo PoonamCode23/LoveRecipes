@@ -1,5 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
+{% load static %}
 <main class="container">
     <h1>Recipe List</h1>
     <section>
@@ -50,45 +51,24 @@
     </section>
 </main>
 
-<style>
-    .button {
-        color: white;
-        background-color: rgb(97, 189, 77);
-        position: absolute;
-        text-decoration: none;
-        transition: box-shadow 0.4s ease;
-        padding: 5px 15px;
-        border-radius: 5px;
-    }
+<div class="pagination-container">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+        {% else %}
+            <span>&lt;</span>
+        {% endif %}
+        <span class="current-page">You are on page <strong>{{ page_obj.number }}</strong></span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+        {% else %}
+            <span>&gt;</span>
+        {% endif %}
+    </div>
+</div>
 
-    .button:hover {
-        box-shadow: 3px 4px 6px rgb(97, 189, 77);
-    }
-
-    .card {
-        transition: box-shadow 0.4s ease;
-    }
-
-    .card:hover {
-        box-shadow: 3px 4px 6px rgb(97, 189, 77);
-    }
-
-    .card-text {
-        text-align: justify;
-    }
-
-    .tags {
-        padding: 2px 8px;
-        margin: 0 5px 5px 0;
-        border: none;
-        border-radius: 8px;
-        background-color: #f1f1f1;
-    }
-
-    .tags:hover {
-        background-color: black;
-        color: white;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+        
+    
 {% endblock %}
 <!--endblock at the end so css effects can be seen-->

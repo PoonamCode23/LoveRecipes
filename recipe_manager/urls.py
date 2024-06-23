@@ -10,5 +10,8 @@ urlpatterns = [
     path('recipe_details/<int:recipe_id>/',
          views.recipe_details, name='recipe_details'),
 
+    path('update_recipes/<int:recipe_id>/',
+         views.update_recipe, name='update_recipes'),
+
 
 ]

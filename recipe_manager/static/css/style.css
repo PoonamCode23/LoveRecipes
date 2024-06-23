@@ -123,6 +123,22 @@ body {
     padding-left: 8px;
 
 }
+.delete-btn:hover .ph-trash {
+    color: rgb(251, 3, 3);
+    font-size: 20px;
+}
+.update-link {
+    text-decoration: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.update-link:hover .ph-pencil {
+    color: darkblue;
+    font-size: 20px; 
+}
+
 
 /*for recipe details page*/
 .image-banner {

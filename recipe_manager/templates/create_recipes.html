@@ -2,35 +2,37 @@
 {% block content %}
 {% load static %}
 
+<link rel="stylesheet" href="{% static 'css/add_update.css' %}">
+
 <div class="container">
-    <main class="box border mx-auto p-5 mb-1">
+    <main class="box mx-auto p-5 mb-1">
         <section>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="titlebar mb-4">
-                    <h3 style="color: rgb(97, 189, 77)">Create Your Own Recipes</h3>
+                    <h3>Create Your Own Recipes</h3>
                     <h5>Uploading personal recipes is easy. Add yours to your favorites, share with friends, family, or the LoveRecipes community.</h5>
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <div class="left-side me-5" style="width: 62%;">
+                    <div class="left-side me-5">
                         <div class="form-group mb-3">
-                            <label class="fs-5" for="id_title">Recipe Title</label>
+                            <label for="id_title" class="fs-5">Recipe Title</label>
                             {{ form.title }}
                         </div>
 
                         <div class="form-group mb-3">
-                            <label class="fs-5" for="id_description">Description</label>
+                            <label for="id_description" class="fs-5">Description</label>
                             {{ form.description }}
-                            <small id="charCount" class="form-text text-muted">Maximum 130 characters.</small>
+                            <small id="charCount" class="form-text text-muted">Maximum 150 characters.</small>
                         </div>
                     </div>
 
                     <div class="d-grid">
-                        <label class="mb-2 fs-5" for="id_image">Add Image</label>
+                        <label for="id_image" class="fs-5">Add Image</label>
                         <label for="image-upload" class="image-upload-label">
                             {{ form.image }}
-                            <img src="https://placehold.co/200x200" alt="" class="img-thumbnail mb-2" style="max-height: 250px" id="file-preview" />
+                            <img src="https://placehold.co/200x200" alt="" class="img-thumbnail mb-2" id="file-preview" />
                         </label>
                     </div>
                 </div>
@@ -38,37 +40,37 @@
 
                 <div id="ingredientcontainer">
                     <div class="form-group mb-3">
-                        <label class="fs-5" for="id_ingredients">Ingredients</label>
+                        <label for="id_ingredients" class="fs-5">Ingredients</label>
                         <input type="text" class="form-control" name="ingredients" placeholder="e.g. 2 cups flour">
                     </div>
                     <div class="form-group mb-3">
                         <input type="text" class="form-control" name="ingredients" placeholder="e.g. 1 spoon sugar">
                     </div>
                 </div>
-                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addIngredientBtn"> <i class="ph-bold ph-plus"></i>Add Ingredient</button>
+                <button type="button" class="btn mb-3" id="addIngredientBtn"><i class="ph-bold ph-plus"></i>Add Ingredient</button>
                 <br>
 
                 <div id="directioncontainer">
                     <div class="form-group mb-3">
-                        <label class="fs-5" for="id_directions">Directions</label>
+                        <label for="id_directions" class="fs-5">Directions</label>
                         <input type="text" class="form-control" name="directions" placeholder="e.g. Preheat oven to 200 degrees...">
                     </div>
                     <div class="form-group mb-3">
                         <input type="text" class="form-control" name="directions" placeholder="e.g. Mix all ingredients in a bowl...">
                     </div>
                 </div>
-                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addDirectionBtn"> <i class="ph-bold ph-plus"></i>Add Steps</button>
+                <button type="button" class="btn mb-3" id="addDirectionBtn"><i class="ph-bold ph-plus"></i>Add Steps</button>
                 <br>
 
                 <div class="form-group mb-3">
                     <div class="row">
                         <div class="col">
-                            <label class="mb-2 fs-5" for="id_time_required">Preparation Time (in mins)</label>
+                            <label for="id_time_required" class="fs-5">Preparation Time (in mins)</label>
                             {{ form.time_required }}
                         </div>
 
                         <div class="col">
-                            <label class="mb-2 fs-5" for="id_servings">Servings</label>
+                            <label for="id_servings">Servings</label>
                             {{ form.servings }}
                         </div>
                     </div>
@@ -76,24 +78,21 @@
 
                 <div id="tagcontainer">
                     <div class="form-group mb-3">
-                        <label class="fs-5" for="id_tags">Tags</label>
+                        <label class="fs-5"for="id_tags">Tags</label>
                         <input type="text" class="form-control tag-input" name="tags" placeholder="e.g. gluten-free">
                     </div>
                 </div>
 
-                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addTagBtn"> <i class="ph-bold ph-plus"></i>Add Tags</button>
+                <button type="button" class="btn mb-3" id="addTagBtn"><i class="ph-bold ph-plus"></i>Add Tag</button>
 
                 <div class="mb-3">
-                    <button type="button" class="btn btn-success mt-4" onclick="reset()">Cancel</button>
-                    <button type="submit" class="btn btn-success mt-4">Submit Recipe</button>
+                    <button type="button" class="b" onclick="reset()">Cancel</button>
+                    <button type="submit" class="b">Submit Recipe</button>
                 </div>
             </form>
         </section>
     </main>
 </div>
 
-
-
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,109 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+
+    <div class="bg-body-tertiary" style="box-shadow: 0 10px 25px -18px #F88379; position: fixed;width: 100%; left:0;top: 0;z-index: 1;">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary nav-underline mb-1" id="pills-tab" role="tablist">
+            <div class="container d-flex">
+                <a href="{% url 'recipe_manager:view_recipes' %}">
+                    <img src="{{ MEDIA_URL }}images/logo.png" alt="logo" style="width:100px;height: auto;margin-right: 20px;">
+                     <!--'django.template.context_processors.media', should be added inside templates of settings.py so that media url is visible in every page-->
+                </a>
+                <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+
+                    <div>
+                        <ul class="navbar-nav">      
+                            <li class="nav-item me-3">
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:view_recipes' %}">Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:create_recipes' %}">Add Recipe</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link  fs-5" aria-current="page" href="">Log In</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link fs-5" aria-current="page" href="">Register</a>
+                            </li> 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container ">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex">
+                    <div class="dropdown">
+                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="recipeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Recipes
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="recipeDropdown">
+                            <li><a class="dropdown-item" href="">Breakfast</a></li>
+                            <li><a class="dropdown-item" href="">Lunch</a></li>
+                            <li><a class="dropdown-item" href="">Dinner</a></li>
+                            <li><a class="dropdown-item" href="">Salads</a></li>
+                            <li><a class="dropdown-item" href="">Healthy</a></li>
+                            <li><a class="dropdown-item" href="">Soups</a></li>
+                            <li><a class="dropdown-item" href="">Desserts</a></li>
+                            <li><a class="dropdown-item" href="">Bakery</a></li>
+                            <li><a class="dropdown-item" href="">Drinks</a></li>
+                            <li><a class="dropdown-item" href="">Vegan</a></li>
+                            <li><a class="dropdown-item" href="">Non-Veg</a></li>
+                        </ul>
+
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="ingredientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ingredients
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="ingredientDropdown">
+                            <li><a class="dropdown-item" href="">Chicken</a></li>
+                            <li><a class="dropdown-item" href="">Seafood</a></li>
+                            <li><a class="dropdown-item" href="">Flour</a></li>
+                            <li><a class="dropdown-item" href="">Fruits</a></li>
+                            <li><a class="dropdown-item" href="">Vegetables</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="occasionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Occasions </button>
+                        <ul class="dropdown-menu" aria-labelledby="occasionDropdown">
+                            <li><a class="dropdown-item" href="">Summer Recipes</a></li>
+                            <li><a class="dropdown-item" href="">Winter Recipes</a></li>
+                            <li><a class="dropdown-item" href="">Festivals</a></li>
+                            <li><a class="dropdown-item" href="">Birthday</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="cuisineDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cuisines
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="cuisineDropdown">
+                            <li><a class="dropdown-item" href="">Nepali</a></li>
+                            <li><a class="dropdown-item" href="">Italian</a></li>
+                            <li><a class="dropdown-item" href="">Indian</a></li>
+                            <li><a class="dropdown-item" href="">Japanese</a></li>
+                            <li><a class="dropdown-item" href="">Chinese</a></li>
+                            <li><a class="dropdown-item" href="">Korean</a></li>
+                            <li><a class="dropdown-item" href="">Filipino</a></li>
+                            <li><a class="dropdown-item" href="">Mexican</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <form method="GET" action="" class="d-flex mb-0" role="search">
+                   
+                    <div class="input-group">
+                        <input class="form-control search" type="text" placeholder="Search Recipe" name="search" value="" aria-label="Search">
+                        <button class="btnn" type="submit">
+                            <i class="ph-bold ph-magnifying-glass fs-4"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+

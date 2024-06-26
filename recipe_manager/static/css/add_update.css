@@ -1,0 +1,101 @@
+.box {
+    width: 60%;
+    background-color: white;
+}
+
+.button {
+    background-color:#FA8072;
+    border: none;
+    border-radius: 7px;
+    padding: 7px;
+}
+.b{
+    background-color: #F88379;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+}
+.b:hover{
+    box-shadow: 3px 4px 6px #F88379;
+}
+
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.ingredient-input {
+    width: 95%;
+}
+
+.direction-input {
+    width: 95%;
+}
+
+.tag-input {
+    width: 95%;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+}
+.form-control.tag-input {
+    width: 100%; 
+}
+.container {
+    margin: 0 auto;
+}
+
+.box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.titlebar h3 {
+    color: #F88379;
+}
+
+
+#charCount {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.left-side {
+    width: 100%;
+    margin-right: 20px;
+}
+
+.d-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.image-upload-label img {
+    max-height: 250px;
+}
+
+
+.b {
+    margin-top: 20px;
+}
+
+#addIngredientBtn, #addDirectionBtn, #addTagBtn {
+    color: #F88379;
+}
+
+.img-thumbnail {
+    width: 350px;
+}

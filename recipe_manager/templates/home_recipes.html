@@ -1,8 +1,15 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 {% load static %}
+
+{% load sweetify %}
+
+{% sweetify %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+
 <main class="container">
-    <h1>Recipe List</h1>
     <section>
         <div class="d-flex align-items-center justify-content-between mb-3">
             <!-- align items at same row -->
@@ -27,15 +34,16 @@
                                 {% endfor %}
                             </div>
                          
-                          
+                            <!--here recipe_details should match the name in urls path-->
                             <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
 
-                            <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link">
+                            <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
                                 <i class="ph-bold ph-pencil"></i>
                             </a>
-                            <form method="post" action="" id="delete-recipe-{{ recipe.id }}">
+                            <!-- add namespace-->
+                            <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}" >
                                 {% csrf_token %}
-                                <button type="submit" class="btn delete-btn" style="color: red; position: absolute; bottom: 4px; right: 30px;">
+                                <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
                                     <i class="ph-bold ph-trash"></i>      
             
                             </form>
@@ -66,8 +74,24 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-        
-    
+<script>
+      window.deleteConfirm = function(e, recipe_id) {
+    e.preventDefault();
+    var form = document.getElementById('deleterecipe-' + recipe_id);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    })
+  }
+</script>
 {% endblock %}
 <!--endblock at the end so css effects can be seen-->

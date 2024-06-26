@@ -1,19 +1,19 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'css/add_update.css' %}">
 <div class="container">
     <main class="box border mx-auto p-5 mb-1">
         <section>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="titlebar mb-4">
-                    <h3 style="color: rgb(97, 189, 77)">Update Recipe</h3>
-                    <h5>Edit the details of your recipe below.</h5>
+                    <h3>Update Recipe</h3>
+                    <h5>Edit details of your recipe below.</h5>
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <div class="left-side me-5" style="width: 62%;">
+                    <div class="left-side me-5">
                         <div class="form-group mb-3">
                             <label class="fs-5" for="id_title">Recipe Title</label>
                             {{ form.title }}
@@ -30,7 +30,7 @@
                         <label class="mb-2 fs-5" for="id_image">Add Image</label>
                         <label for="image-upload" class="image-upload-label">
                             {{ form.image }}
-                            <img src="{{ recipe.image.url }}" alt="Recipe Image" class="img-thumbnail mb-2" style="max-height: 250px" id="file-preview" />
+                            <img src="{{ recipe.image.url }}" alt="Recipe Image" class="img-thumbnail mb-2" id="file-preview" />
                         </label>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     </div>
                     <!-- You can dynamically add more ingredient input fields if needed -->
                 </div>
-                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addIngredientBtn"> <i class="ph-bold ph-plus"></i>Add Ingredient</button>
+                <button type="button" class="btn mb-3" id="addIngredientBtn">Add Ingredient</button>
                 <br>
 
                 <div id="directioncontainer">
@@ -59,7 +59,7 @@
                     </div>
                     <!-- Similarly, you can add more direction input fields dynamically -->
                 </div>
-                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addDirectionBtn"> <i class="ph-bold ph-plus"></i>Add Step</button>
+                <button type="button" class="btn mb-3" id="addDirectionBtn">Add Step</button>
                 <br>
 
                 <div class="form-group mb-3">
@@ -83,18 +83,17 @@
                     </div>
                 </div>
 
-                <button type="button" style="color: rgb(97, 189, 77)" class="btn mb-3" id="addTagBtn"> <i class="ph-bold ph-plus"></i>Add Tags</button>
+                <button type="button" class="btn mb-3" id="addTagBtn">Add Tags</button>
 
                 <div class="mb-3">
-                    <button type="button" class="btn btn-success mt-4" onclick="reset()">Cancel</button>
-                    <button type="submit" class="btn btn-success mt-4">Update Recipe</button>
+                    <button type="button" class="b" onclick="reset()">Cancel</button>
+                    <button type="submit" class="b">Update Recipe</button>
                 </div>
             </form>
         </section>
     </main>
 </div>
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script src="{% static 'js/script.js' %}"></script>
 
 

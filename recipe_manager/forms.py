@@ -13,7 +13,7 @@ class RecipeForm(forms.ModelForm):
             attrs={
                 'class': 'form-control',
                 'style': 'height: 160px; resize: vertical;',
-                'maxlength': 130
+                'maxlength': 150
             }
         ),
         validators=[MaxLengthValidator(150)]

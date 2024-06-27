@@ -14,6 +14,13 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <!-- align items at same row -->
         </div>
+        {% if search_message %}
+        <!-- <div class="alert alert-info"> shows blue box -->
+        <div class = "search-message">
+            {{ search_message|linebreaks }}
+        </div>
+        {% endif %}
+
         <div class="row">
             {% if recipes %}
                 {% for recipe in recipes %}
@@ -52,12 +59,15 @@
                 </div>
                 {% endfor %}
             {% else %}
+                {% if not search_message %}
                 <p>No recipes have been uploaded.</p>
+                {% endif %}
             {% endif %}
         </div>
     </section>
 </main>
 
+{% if not search_message %}
 <div class="pagination-container">
     <div class="pagination">
         {% if page_obj.has_previous %}
@@ -73,7 +83,7 @@
         {% endif %}
     </div>
 </div>
-
+{% endif %}
 <script>
       window.deleteConfirm = function(e, recipe_id) {
     e.preventDefault();

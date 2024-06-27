@@ -90,10 +90,11 @@
                         </ul>
                     </div>
                 </div>
-                <form method="GET" action="" class="d-flex mb-0" role="search">
+
+                <form method="GET" action="{% url 'categorize:search_recipes' %}" class="d-flex mb-0" role="search">
                    
                     <div class="input-group">
-                        <input class="form-control search" type="text" placeholder="Search Recipe" name="search" value="" aria-label="Search">
+                        <input class="form-control search" type="text" placeholder="Search Recipe" name="search" value="{{ keyword }}" aria-label="Search">
                         <button class="btnn" type="submit">
                             <i class="ph-bold ph-magnifying-glass fs-4"></i>
                         </button>

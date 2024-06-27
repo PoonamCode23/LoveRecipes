@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'recipe_manager',
+    'categorize',
     'sweetify'
 ]
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

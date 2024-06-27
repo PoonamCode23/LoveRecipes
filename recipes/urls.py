@@ -23,5 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipe_manager.urls')),
+    path('', include('categorize.urls'))
     # when we will upload image, it will allow to create URL automatically.
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

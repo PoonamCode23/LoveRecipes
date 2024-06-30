@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<div class="overlay"></div>
+s
+<div class="register-container">
+    <h3>Register Here</h3>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group fs-5">
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">
+                        {{ field.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+       
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+
+{% endblock %}

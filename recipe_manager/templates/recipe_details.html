@@ -5,6 +5,9 @@
 
 {% load sweetify %}
 {%sweetify %}
+
+<link rel="stylesheet" href="{% static 'css/details.css' %}">
+
 <div class="container mb-5">
     <img src="{{ recipe.image.url }}" alt="Recipe Image" class="image-banner">
 
@@ -64,6 +67,5 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="{% static 'css/details.css' %}">
 
 {% endblock %}

@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recipe_manager',
     'categorize',
-    'sweetify'
+    'users',
+    'sweetify',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount'
 ]
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
@@ -49,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -134,11 +140,25 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = 'static/'
-MEDIA_ROOT = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # base_dir is on top.
+STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# Directory where static files will be collected in production
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Additional locations the staticfiles app will traverse to find static files
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Finders to look for static files
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+# Media files configuration
+MEDIA_URL = '/media/'
+
+# Directory for uploaded media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

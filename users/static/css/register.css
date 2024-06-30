@@ -1,0 +1,65 @@
+
+
+body {
+    background: url("/media/images/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    z-index: 1; 
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4); 
+    z-index: -1; /* Ensure overlay is behind all content */
+}
+.register-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 35px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-left: 220px;
+    
+}
+
+.register-container h3 {
+    margin-bottom: 30px;
+}
+
+.register-container .form-group {
+    margin-bottom: 25px;
+}
+
+
+.register-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.register-container .form-group .error {
+    color: red;
+    font-size: 1em;
+    margin-top: 5px;
+}
+
+.register-container button[type="submit"] {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #F88379;
+    color: white;
+    font-size: larger;
+}
+
+.register-container button[type="submit"]:hover {
+    box-shadow: 3px 4px 6px #F88379;
+}
+

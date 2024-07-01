@@ -16,7 +16,7 @@ body {
     background: rgba(255, 255, 255, 0.4); 
     z-index: -1; /* Ensure overlay is behind all content */
 }
-.register-container {
+.auth-container {
     max-width: 700px;
     margin: auto;
     padding: 35px;
@@ -27,16 +27,16 @@ body {
     
 }
 
-.register-container h3 {
+.auth-container h3 {
     margin-bottom: 30px;
 }
 
-.register-container .form-group {
+.auth-container .form-group {
     margin-bottom: 25px;
 }
 
 
-.register-container .form-group input {
+.auth-container .form-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -44,13 +44,20 @@ body {
     box-sizing: border-box;
 }
 
-.register-container .form-group .error {
+.auth-container .form-group .error {
     color: red;
     font-size: 1em;
     margin-top: 5px;
 }
 
-.register-container button[type="submit"] {
+.error {
+    color: red;
+    font-size: 1em;
+    padding: 5px 5px 15px 0;
+}
+
+
+.auth-container button[type="submit"] {
     padding: 10px;
     border: none;
     border-radius: 10px;
@@ -59,7 +66,7 @@ body {
     font-size: larger;
 }
 
-.register-container button[type="submit"]:hover {
+.auth-container button[type="submit"]:hover {
     box-shadow: 3px 4px 6px #F88379;
 }
 

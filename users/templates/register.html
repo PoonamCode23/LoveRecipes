@@ -2,10 +2,9 @@
 {% block content %}
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 <div class="overlay"></div>
-s
-<div class="register-container">
+<div class="auth-container">
     <h3>Register Here</h3>
     <form method="post">
         {% csrf_token %}
@@ -20,10 +19,7 @@ s
                 {% endif %}
             </div>
         {% endfor %}
-       
         <button type="submit">Register</button>
     </form>
 </div>
-
-
 {% endblock %}

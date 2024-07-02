@@ -8,16 +8,27 @@
 
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
+
 <main class="container">
+
     <section>
         {% if user.is_authenticated %}
         
         <h3>Welcome {{ username }}</h3>
-       
-            These are recipes added by you
+        {%if recipes%}
+        <div class="welcome">
+            You've added some delicious recipes! 🤩  </br>
+            Why not add a few more recipes to your collection? <a href="{% url 'recipe_manager:create_recipes' %}" class="add-link">Add Recipe</a>
+        </div>
+        {%else%}
+        <div class="welcome">
+            No recipes yet!  </br>
+            Why not add a few more recipes to your collection? <a href="{% url 'recipe_manager:create_recipes' %}" class="add-link">Add Recipe</a>
+        </div>
+        {%endif%}
             <div class="row">
                 
-                {% for recipe in user_recipes %}
+                {% for recipe in recipes %}
                     <div class="col-md-3">
                         <div class="card mb-3">
                             <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;"
@@ -49,8 +60,6 @@
                     </div>
                 {% endfor %}
             </div>
-        {% else %}
-            <p>Please add recipes to see the recipes added by you</p>
         {% endif %}
     </section>
 </main>

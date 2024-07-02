@@ -5,10 +5,12 @@ from django.contrib import messages
 from .models import Recipe
 from django.conf import settings  # for deleting image file
 import os  # deleting media folder
+from django.contrib.auth.decorators import login_required
 import json
 import sweetify
 
 
+@login_required
 def upload_recipe(request):
     title = 'LoveRecipes: Add Your Delicious Recipe'
     subtitle = 'Adding your personal recipes is easy. Add yours to your favorites, share with friends, family, or the LoveRecipes community.'
@@ -24,6 +26,7 @@ def upload_recipe(request):
             tags = [tag.capitalize() for tag in tags]
 
             recipe = form.save(commit=False)
+            recipe.user = request.user  # Assign the logged-in user to the recipe
             recipe.set_ingredients(ingredients)
             recipe.set_directions(directions)
             recipe.set_tags(tags)
@@ -101,7 +104,9 @@ def view_recipes(request):
             'image': recipe.image,
             'title': recipe.title,
             'description': recipe.description,
-            'tags': json.loads(recipe.tags)
+            'tags': json.loads(recipe.tags),
+            'user': recipe.user.username,
+            'user_id': recipe.user.id  # Add this line to include user_id
         }
         recipe_list.append(recipe_data)
 
@@ -120,7 +125,6 @@ def recipe_details(request, recipe_id):
     # Assuming ingredients and directions are stored as JSONField in Recipe model
     ingredients = json.loads(recipe.ingredients)
     directions = json.loads(recipe.directions)
-    print(directions)
 
     context = {
         'recipe': recipe,

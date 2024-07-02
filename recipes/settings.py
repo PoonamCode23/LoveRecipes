@@ -162,3 +162,5 @@ MEDIA_URL = '/media/'
 
 # Directory for uploaded media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_URL = '/login/'

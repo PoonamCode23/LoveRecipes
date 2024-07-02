@@ -19,6 +19,10 @@
                 {% endif %}
             </div>
         {% endfor %}
+        <div class="form-group fs-5">
+            Already registered? <a href="{% url 'users:user_login' %}" class="login-link">Login Here</a>
+        </div>
+        
         <button type="submit">Register</button>
     </form>
 </div>

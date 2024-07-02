@@ -1,9 +1,10 @@
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from recipe_manager.models import Recipe
+import json
 
 
 def register(request):
@@ -14,7 +15,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('users:user_recipes')
+            return redirect('users:view_my_recipes')
     else:
         form = UserRegistrationForm()
 
@@ -33,7 +34,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('users:user_recipes')
+            return redirect('users:view_my_recipes')
         else:
             messages.error(request, 'Invalid username or password.')
             return render(request, 'login.html')
@@ -42,17 +43,64 @@ def user_login(request):
 
 
 @login_required
-def user_recipes(request):
+def view_my_recipes(request):
     title = 'LoveRecipes: My recipes'
     if not request.user.is_authenticated:
         return redirect('login')
 
     user_recipes = Recipe.objects.filter(user=request.user)
 
+    recipe_list = []
+    for recipe in user_recipes:
+        recipe_data = {
+            'id': recipe.id,
+            'image': recipe.image,
+            'title': recipe.title,
+            'description': recipe.description,
+            'tags': json.loads(recipe.tags)
+        }
+        recipe_list.append(recipe_data)
+
     context = {
         'username': request.user.username,
-        'user_recipes': user_recipes,
+        'recipes': recipe_list,
         'title': title
-
     }
     return render(request, 'user_recipes.html', context)
+
+
+def view_user_recipes(request, user_id):
+    print(f"Debug: Fetching recipes for user ID {user_id}")
+
+    User = get_user_model()
+    user = get_object_or_404(User, id=user_id)
+    print(f"Debug: User fetched - {user.username}")
+
+    title = f'LoveRecipes: Recipes by {user.username}'
+    recipes = Recipe.objects.filter(user=user)
+    print(f"Debug: Number of recipes fetched - {recipes.count()}")
+
+    recipe_list = []
+    for recipe in recipes:
+        recipe_data = {
+            'id': recipe.id,
+            'image': recipe.image,
+            'title': recipe.title,
+            'description': recipe.description,
+            'tags': json.loads(recipe.tags),
+        }
+        recipe_list.append(recipe_data)
+
+    context = {
+        'username': user.username,
+        'user_recipes': recipe_list,
+        'title': title
+    }
+
+    print("Debug: Before rendering")
+    return render(request, 'demo.html', context)
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('recipe_manager:view_recipes')

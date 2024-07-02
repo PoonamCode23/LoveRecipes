@@ -7,37 +7,67 @@
             <div class="container d-flex">
                 <a href="{% url 'recipe_manager:view_recipes' %}">
                     <img src="{{ MEDIA_URL }}images/logo.png" alt="logo" style="width:100px;height: auto;margin-right: 20px;">
-                     <!--'django.template.context_processors.media', should be added inside templates of settings.py so that media url is visible in every page-->
                 </a>
                 <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-
                     <div>
-                        <ul class="navbar-nav">      
+                        <ul class="navbar-nav">
+                            {% if user.is_authenticated %}
                             <li class="nav-item me-3">
-                                <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:view_recipes' %}">Home </a>
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:view_recipes' %}">Home</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'users:view_my_recipes' %}">My Recipes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:create_recipes' %}">Add Recipe</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <button class="btn bg-none border-none dropdown-toggle fs-5" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="ph-bold ph-user"></i>
+                                        {{ user.username }}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                                        <li><a class="dropdown-item" href="#">My Profile</a></li>
+                                        <li>
+                                            <form method="POST" action="{% url 'users:user_logout' %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="dropdown-item btn bg-none border-none fs-6">Log Out</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            {% else %}
+                            <li class="nav-item me-3">
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:view_recipes' %}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fs-5" aria-current="page" href="{% url 'recipe_manager:create_recipes' %}">Add Recipe</a>
                             </li>
                             <li class="nav-item me-3">
-                                <a class="nav-link  fs-5" aria-current="page" href="{% url 'users:user_login' %}">Log In</a>
+                                <a class="nav-link fs-5" aria-current="page" href="{% url 'users:user_login' %}">Log In</a>
                             </li>
                             <li class="nav-item me-3">
                                 <a class="nav-link fs-5" aria-current="page" href="{% url 'users:register' %}">Register</a>
-                            </li> 
+                            </li>
+                         
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
+        
         <div class="container ">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div class="d-flex">
                     <div class="dropdown">
-                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="recipeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn bg-none border-none dropdown-toggle fs-5" type="button" id="recipeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             Recipes
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="recipeDropdown">
+                        <ul class="dropdown-menu fs-5" aria-labelledby="recipeDropdown">
                             <li><a class="dropdown-item" href="">Breakfast</a></li>
                             <li><a class="dropdown-item" href="">Lunch</a></li>
                             <li><a class="dropdown-item" href="">Dinner</a></li>
@@ -53,10 +83,10 @@
 
                     </div>
                     <div class="dropdown">
-                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="ingredientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn bg-none border-none dropdown-toggle fs-5" type="button" id="ingredientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             Ingredients
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="ingredientDropdown">
+                        <ul class="dropdown-menu fs-5" aria-labelledby="ingredientDropdown">
                             <li><a class="dropdown-item" href="">Chicken</a></li>
                             <li><a class="dropdown-item" href="">Seafood</a></li>
                             <li><a class="dropdown-item" href="">Flour</a></li>
@@ -65,9 +95,9 @@
                         </ul>
                     </div>
                     <div class="dropdown">
-                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="occasionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn bg-none border-none dropdown-toggle fs-5" type="button" id="occasionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             Occasions </button>
-                        <ul class="dropdown-menu" aria-labelledby="occasionDropdown">
+                        <ul class="dropdown-menu fs-5" aria-labelledby="occasionDropdown">
                             <li><a class="dropdown-item" href="">Summer Recipes</a></li>
                             <li><a class="dropdown-item" href="">Winter Recipes</a></li>
                             <li><a class="dropdown-item" href="">Festivals</a></li>
@@ -75,10 +105,10 @@
                         </ul>
                     </div>
                     <div class="dropdown">
-                        <button class="btn bg-none border-none dropdown-toggle" type="button" id="cuisineDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn bg-none border-none dropdown-toggle fs-5" type="button" id="cuisineDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             Cuisines
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="cuisineDropdown">
+                        <ul class="dropdown-menu fs-5" aria-labelledby="cuisineDropdown">
                             <li><a class="dropdown-item" href="">Nepali</a></li>
                             <li><a class="dropdown-item" href="">Italian</a></li>
                             <li><a class="dropdown-item" href="">Indian</a></li>

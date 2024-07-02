@@ -31,6 +31,13 @@
                         <div class="card-body">
                             <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
                             <p class="card-text">{{ recipe.description }}</p>
+
+                            
+                            <div class="username">
+                                Recipe By: <a href="{% url 'users:view_user_recipes' recipe.user_id %}" class="recipe-link">{{ recipe.user}}</a>
+                            </div>
+                            
+                            
                             <div class="mt-5 mb-5 d-flex flex-wrap">
                                 {% for tag in recipe.tags %}
                                 <form method="GET" action="">
@@ -44,6 +51,7 @@
                             <!--here recipe_details should match the name in urls path-->
                             <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
 
+                            {% if request.user.is_authenticated and recipe.user == request.user %}
                             <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
                                 <i class="ph-bold ph-pencil"></i>
                             </a>
@@ -52,8 +60,8 @@
                                 {% csrf_token %}
                                 <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
                                     <i class="ph-bold ph-trash"></i>      
-            
                             </form>
+                            {%endif%}
                         </div>
                     </div>
                 </div>
@@ -67,7 +75,7 @@
     </section>
 </main>
 
-{% if not search_message %}
+{% if recipes and not search_message %}
 <div class="pagination-container">
     <div class="pagination">
         {% if page_obj.has_previous %}

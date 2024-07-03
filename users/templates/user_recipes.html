@@ -1,86 +1,93 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
-{% load static %}
+    {% load static %}
+    {% load sweetify %}
+    {% sweetify %}
 
-{% load sweetify %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-{% sweetify %}
-
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-
-
-<main class="container">
-
-    <section>
-        {% if user.is_authenticated %}
-        
-        <h3>Welcome {{ username }}</h3>
-        {%if recipes%}
-        <div class="welcome">
-            You've added some delicious recipes! 🤩  </br>
-            Why not add a few more recipes to your collection? <a href="{% url 'recipe_manager:create_recipes' %}" class="add-link">Add Recipe</a>
-        </div>
-        {%else%}
-        <div class="welcome">
-            No recipes yet!  </br>
-            Why not add a few more recipes to your collection? <a href="{% url 'recipe_manager:create_recipes' %}" class="add-link">Add Recipe</a>
-        </div>
-        {%endif%}
-            <div class="row">
-                
-                {% for recipe in recipes %}
-                    <div class="col-md-3">
-                        <div class="card mb-3">
-                            <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;"
-                                 src="{{ recipe.image.url }}" alt="Recipe Image">
-                            <div class="card-body">
-                                <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
-                                <p class="card-text">{{ recipe.description }}</p>
-                                <div class="mt-5 mb-5 d-flex flex-wrap">
-                                    {% for tag in recipe.tags %}
-                                        <form method="GET" action="">
+    <main class="container">
+        <section>
+            {% if user_username %}
+                <h2 class="mb-4">Recipes added by {{ user_username }}</h2>
+            {% else %}
+                {% if user.is_authenticated %}
+                    {% if username %}
+                        <h3>Welcome {{ username }}</h3>
+                    {% endif %}
+                    {% if recipes %}
+                        <div class="welcome">
+                            You've added some delicious recipes! 🤩<br>
+                            Why not add a few more recipes to your collection? 
+                            <a href="{% url 'recipe_manager:create_recipes' %}" class="add-link">Add Recipe</a>
+                        </div>
+                    {% else %}
+                        <div class="welcome">
+                            No recipes yet!<br>
+                            Why not add a few more recipes to your collection? 
+                            <a href="{% url 'recipe_manager:create_recipes' %}" class="add-link">Add Recipe</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            
+            {% if user_recipes or recipes %}
+                <div class="row">
+                    {% for recipe in recipes|default_if_none:user_recipes %}
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;" 
+                                     src="{{ recipe.image.url }}" alt="Recipe Image">
+                                <div class="card-body">
+                                    <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
+                                    <p class="card-text">{{ recipe.description }}</p>
+                                    <div class="mt-5 mb-5 d-flex flex-wrap">
+                                        {% for tag in recipe.tags %}
+                                            <form method="GET" action="">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="tag" value="{{ tag }}">
+                                                <button type="submit" class="tags">{{ tag }}</button>
+                                            </form>
+                                        {% endfor %}
+                                    </div>
+                                    <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
+                                    {% if request.user.is_authenticated and recipe.user == request.user %}
+                                        <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
+                                            <i class="ph-bold ph-pencil"></i>
+                                        </a>
+                                        <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}">
                                             {% csrf_token %}
-                                            <input type="hidden" name="tag" value="{{ tag }}">
-                                            <button type="submit" class="tags">{{ tag }}</button>
+                                            <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
+                                                <i class="ph-bold ph-trash"></i>
+                                            </button>
                                         </form>
-                                    {% endfor %}
+                                    {% endif %}
                                 </div>
-                                <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
-                                <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
-                                    <i class="ph-bold ph-pencil"></i>
-                                </a>
-                                <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
-                                        <i class="ph-bold ph-trash"></i>
-                                    </button>
-                                </form>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </section>
-</main>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
 
-<script>
-    window.deleteConfirm = function(e, recipe_id) {
-        e.preventDefault();
-        var form = document.getElementById('deleterecipe-' + recipe_id);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
-        })
-    }
-</script>
+    <script>
+        window.deleteConfirm = function(e, recipe_id) {
+            e.preventDefault();
+            var form = document.getElementById('deleterecipe-' + recipe_id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        }
+    </script>
 {% endblock %}

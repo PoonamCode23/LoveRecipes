@@ -70,15 +70,10 @@ def view_my_recipes(request):
 
 
 def view_user_recipes(request, user_id):
-    print(f"Debug: Fetching recipes for user ID {user_id}")
-
     User = get_user_model()
     user = get_object_or_404(User, id=user_id)
-    print(f"Debug: User fetched - {user.username}")
-
     title = f'LoveRecipes: Recipes by {user.username}'
     recipes = Recipe.objects.filter(user=user)
-    print(f"Debug: Number of recipes fetched - {recipes.count()}")
 
     recipe_list = []
     for recipe in recipes:
@@ -92,13 +87,12 @@ def view_user_recipes(request, user_id):
         recipe_list.append(recipe_data)
 
     context = {
-        'username': user.username,
+        'user_username': user.username,
         'user_recipes': recipe_list,
         'title': title
     }
 
-    print("Debug: Before rendering")
-    return render(request, 'demo.html', context)
+    return render(request, 'user_recipes.html', context)
 
 
 def user_logout(request):

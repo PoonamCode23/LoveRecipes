@@ -22,7 +22,7 @@
         {% endif %}
 
         <div class="row">
-            {% if not recipes %}
+            {% if recipes %}
                 {% for recipe in recipes %}
                 <div class="col-md-3">
                     <div class="card mb-3">
@@ -68,14 +68,14 @@
                 {% endfor %}
             {% else %}
                 {% if not search_message %}
-                <h3>Recipes of the website will be displayed here.</h3>
+                <p>No recipes have been uploaded.</p>
                 {% endif %}
             {% endif %}
         </div>
     </section>
 </main>
 
-{% if not recipes and not search_message %}
+{% if recipes and not search_message %}
 <div class="pagination-container">
     <div class="pagination">
         {% if page_obj.has_previous %}

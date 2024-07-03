@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from recipe_manager.models import Recipe
 import json
@@ -28,6 +29,9 @@ def register(request):
 
 
 def user_login(request):
+    title = 'LoveRecipes: Log In'
+    context = {'title': title}
+
     if request.method == 'POST':
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -37,9 +41,8 @@ def user_login(request):
             return redirect('users:view_my_recipes')
         else:
             messages.error(request, 'Invalid username or password.')
-            return render(request, 'login.html')
-    else:
-        return render(request, 'login.html')
+
+    return render(request, 'login.html', context)
 
 
 @login_required

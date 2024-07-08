@@ -132,3 +132,40 @@
 .recipe-link:hover {
     text-decoration: underline;
 }
+
+/* for latest recipes */
+.custom-card {
+    border: transparent !important;
+    box-shadow: none !important;
+  }
+  
+  .recipe-link {
+  
+    border-radius: 90%;
+    overflow: hidden;
+  }
+  
+  .custom-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+    .image-wrapper {
+      width: 100%;
+      height: 190px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+  
+  .recent_recipe_title, .other_recipe_title{
+      text-align: center;
+      color: #a51508;
+      
+  }
+  .latest_recipe_usernamee{
+      text-align: center;
+      font-size: large;
+  }
+
+  

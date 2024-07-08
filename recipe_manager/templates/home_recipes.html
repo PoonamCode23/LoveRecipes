@@ -1,28 +1,53 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 {% load static %}
-
 {% load sweetify %}
-
 {% sweetify %}
 
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
-
 
 <main class="container">
     <section>
         <div class="d-flex align-items-center justify-content-between mb-3">
             <!-- align items at same row -->
         </div>
+
         {% if search_message %}
-        <!-- <div class="alert alert-info"> shows blue box -->
-        <div class = "search-message">
+        <div class="search-message">
             {{ search_message|linebreaks }}
         </div>
         {% endif %}
 
+        <h3 class="recent_recipe_title">Our Recent Recipes</h3>
         <div class="row">
-            {% if not recipes %}
+            {% for latest_recipe in latest_recipes %}
+            <div class="col-md-2">
+                <div class="card mb-3 custom-card">
+                    <a href="{% url 'recipe_manager:recipe_details' latest_recipe.id %}" class="recipe-link">
+                        <div class="image-wrapper">
+                            <img class="card-img-top custom-card-img" src="{{ latest_recipe.image.url }}" alt="Card image cap">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title mb-3 mx-auto">{{ latest_recipe.title }}</h5>
+                        </div>
+                        <p class="latest_recipe_username">Recipe by 
+                            <a href="{% url 'users:view_user_recipes' latest_recipe.user_id %}" class="recipe-link">
+                                {{ latest_recipe.user.username }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <h3 class="other_recipe_title mb-4">Other Recipes</h3>
+
+        <div class="row">
+            {% if recipes %}
                 {% for recipe in recipes %}
                 <div class="col-md-3">
                     <div class="card mb-3">
@@ -31,13 +56,9 @@
                         <div class="card-body">
                             <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
                             <p class="card-text">{{ recipe.description }}</p>
-
-                            
                             <div class="username">
-                                Recipe By: <a href="{% url 'users:view_user_recipes' recipe.user_id %}" class="recipe-link">{{ recipe.user}}</a>
+                                Recipe By: <a href="{% url 'users:view_user_recipes' recipe.user_id %}" class="recipe-link">{{ recipe.user }}</a>
                             </div>
-                            
-                            
                             <div class="mt-5 mb-5 d-flex flex-wrap">
                                 {% for tag in recipe.tags %}
                                 <form method="GET" action="">
@@ -47,19 +68,16 @@
                                 </form>
                                 {% endfor %}
                             </div>
-                         
-                            <!--here recipe_details should match the name in urls path-->
                             <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
-
-                            {% if request.user.is_authenticated and recipe.user == request.user %}
+                            {% if request.user.is_authenticated and recipe.user_id == request.user.id %}
                             <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
                                 <i class="ph-bold ph-pencil"></i>
                             </a>
-                            <!-- add namespace-->
-                            <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}" >
+                            <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}">
                                 {% csrf_token %}
                                 <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
-                                    <i class="ph-bold ph-trash"></i>      
+                                    <i class="ph-bold ph-trash"></i>
+                                </button>
                             </form>
                             {%endif%}
                         </div>
@@ -68,14 +86,14 @@
                 {% endfor %}
             {% else %}
                 {% if not search_message %}
-                <h3>Recipes of the website will be displayed here.</h3>
+                <p>No recipes have been uploaded.</p>
                 {% endif %}
             {% endif %}
         </div>
     </section>
 </main>
 
-{% if not recipes and not search_message %}
+{% if recipes and not search_message %}
 <div class="pagination-container">
     <div class="pagination">
         {% if page_obj.has_previous %}
@@ -92,24 +110,24 @@
     </div>
 </div>
 {% endif %}
+
 <script>
-      window.deleteConfirm = function(e, recipe_id) {
-    e.preventDefault();
-    var form = document.getElementById('deleterecipe-' + recipe_id);
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        form.submit();
-      }
-    })
-  }
+    window.deleteConfirm = function(e, recipe_id) {
+        e.preventDefault();
+        var form = document.getElementById('deleterecipe-' + recipe_id);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        })
+    }
 </script>
 {% endblock %}
-<!--endblock at the end so css effects can be seen-->

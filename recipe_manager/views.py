@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RecipeForm
@@ -90,6 +91,9 @@ def update_recipe(request, recipe_id):
 
 def view_recipes(request):
     title = 'LoveRecipes'
+    # Order by descending created_at(latest)
+    latest_recipes = Recipe.objects.order_by('-created_at')[:6]
+
     # Fetch random recipes
     recipes = Recipe.objects.order_by('?')
 
@@ -106,13 +110,14 @@ def view_recipes(request):
             'description': recipe.description,
             'tags': json.loads(recipe.tags),
             'user': recipe.user.username,
-            'user_id': recipe.user.id  # Add this line to include user_id
+            'user_id': recipe.user.id
         }
         recipe_list.append(recipe_data)
 
     context = {
         'recipes': recipe_list,
         'page_obj': page_obj,
+        'latest_recipes': latest_recipes,
         'title': title
     }
     return render(request, 'home_recipes.html', context)

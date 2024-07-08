@@ -10,6 +10,6 @@ LoveRecipes is a web application where users can share and discover different re
 
 **MySQL Database**
 
-This project utilizes a MySQL database for storing recipe data. For setup, an SQL file named "recipes_database.sql" is included in the buildDjango directory. This file contains all the necessary schema and initial data required to successfully run the project.
+This project utilizes a MySQL database for storing recipe data. For setup, an SQL file named "recipes_database.sql" is included in the main directory. This file contains all the necessary schema and initial data required to successfully run the project.
 
 

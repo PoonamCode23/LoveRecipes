@@ -31,43 +31,48 @@
                 {% endif %}
             {% endif %}
             
-            {% if user_recipes or recipes %}
-                <div class="row">
-                    {% for recipe in recipes|default_if_none:user_recipes %}
-                        <div class="col-md-3">
-                            <div class="card mb-3">
-                                <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;" 
-                                     src="{{ recipe.image.url }}" alt="Recipe Image">
-                                <div class="card-body">
-                                    <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
-                                    <p class="card-text">{{ recipe.description }}</p>
-                                    <div class="mt-5 mb-5 d-flex flex-wrap">
-                                        {% for tag in recipe.tags %}
-                                            <form method="GET" action="">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="tag" value="{{ tag }}">
-                                                <button type="submit" class="tags">{{ tag }}</button>
-                                            </form>
-                                        {% endfor %}
-                                    </div>
-                                    <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
-                                    {% if request.user.is_authenticated and recipe.user == request.user %}
-                                        <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
-                                            <i class="ph-bold ph-pencil"></i>
-                                        </a>
-                                        <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
-                                                <i class="ph-bold ph-trash"></i>
-                                            </button>
-                                        </form>
-                                    {% endif %}
+            <div class="row">
+                {# By using the same key (recipes) for both views, you ensure that the template does not have to handle different keys and thus prevent the VariableDoesNotExist error #}
+                {% if recipes %}
+                    {% for recipe in recipes %}
+                    <div class="col-md-3">
+                        <div class="card mb-3">
+                            <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;"
+                                 src="{{ recipe.image.url }}" alt="Recipe Image">
+                            <div class="card-body">
+                                <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
+                                <p class="card-text">{{ recipe.description }}</p>
+                                <div class="mt-5 mb-5 d-flex flex-wrap">
+                                    {% for tag in recipe.tags %}
+                                    <form method="GET" action="">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="tag" value="{{ tag }}">
+                                        <button type="submit" class="tags">{{ tag }}</button>
+                                    </form>
+                                    {% endfor %}
                                 </div>
+                             
+                                <!--here recipe_details should match the name in urls path-->
+                                <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
+    
+                                {% if recipe.is_author %}
+                                <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">
+                                    <i class="ph-bold ph-pencil"></i>
+                                </a>
+                                <!-- add namespace-->
+                                <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' recipe.id %}" >
+                                    {% csrf_token %}
+                                    <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
+                                        <i class="ph-bold ph-trash"></i>      
+                                </form>
+                                {%endif%}
                             </div>
                         </div>
+                    </div>
                     {% endfor %}
-                </div>
-            {% endif %}
+               
+                {% endif %}
+            </div>
         </section>
     </main>
 

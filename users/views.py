@@ -44,13 +44,9 @@ def user_login(request):
 
     return render(request, 'login.html', context)
 
-
 @login_required
 def view_my_recipes(request):
     title = 'LoveRecipes: My recipes'
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     user_recipes = Recipe.objects.filter(user=request.user)
 
     recipe_list = []
@@ -60,7 +56,8 @@ def view_my_recipes(request):
             'image': recipe.image,
             'title': recipe.title,
             'description': recipe.description,
-            'tags': json.loads(recipe.tags)
+            'tags': json.loads(recipe.tags),
+            'is_author': recipe.user == request.user,
         }
         recipe_list.append(recipe_data)
 
@@ -86,12 +83,14 @@ def view_user_recipes(request, user_id):
             'title': recipe.title,
             'description': recipe.description,
             'tags': json.loads(recipe.tags),
+            'is_author': recipe.user == request.user,
         }
         recipe_list.append(recipe_data)
 
     context = {
         'user_username': user.username,
-        'user_recipes': recipe_list,
+        # we have used same recipes name instead of other variables to avoid confusion
+        'recipes': recipe_list,
         'title': title
     }
 

@@ -168,8 +168,4 @@ document.addEventListener('DOMContentLoaded', function () {
 function resetForm() {
     document.querySelector('form').reset();
     document.getElementById('file-preview').src = 'https://placehold.co/200x200';
-}
-
-
-
-      
+} 

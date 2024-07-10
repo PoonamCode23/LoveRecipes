@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import Recipe
 from django.conf import settings  # for deleting image file
 import os  # deleting media folder
+from save_recipe.models import Favorite
 from django.contrib.auth.decorators import login_required
 import json
 import sweetify
@@ -91,6 +92,7 @@ def update_recipe(request, recipe_id):
 
 def view_recipes(request):
     title = 'LoveRecipes'
+    user = request.user
     # Order by descending created_at(latest)
     latest_recipes = Recipe.objects.order_by('-created_at')[:6]
 
@@ -110,7 +112,8 @@ def view_recipes(request):
             'description': recipe.description,
             'tags': json.loads(recipe.tags),
             'user': recipe.user.username,
-            'user_id': recipe.user.id
+            'user_id': recipe.user.id,
+            'is_favorite': Favorite.objects.filter(user=user, recipe=recipe).exists() if user.is_authenticated else False
         }
         recipe_list.append(recipe_data)
 

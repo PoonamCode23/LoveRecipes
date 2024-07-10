@@ -168,4 +168,26 @@
       font-size: large;
   }
 
+/* for heart icon*/
+.save-button {
+      font-size: 25px;
+      color: #F88379;
+      border: none;
+      background-color: transparent;
+    }
+    .save-button:hover{
+        font-size:28px;
+        color:red;
+
+    }
+
+    .saved-icon {
+      font-size: 25px;
+      color: red;
+      border: none;
+      background-color: transparent;
+    }
   
+    .custom-tooltip {
+      --bs-tooltip-bg: red;
+    }

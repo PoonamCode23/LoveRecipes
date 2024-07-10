@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipe_manager.urls')),
     path('', include('categorize.urls')),
-    path('', include('users.urls'))
+    path('', include('users.urls')),
+    path('', include('save_recipe.urls')),
+
     # when we will upload image, it will allow to create URL automatically.
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

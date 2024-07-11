@@ -6,7 +6,7 @@ I'm actively developing this project and committing updates almost daily! 😊
 
 **Project Overview**
 
-LoveRecipes is a web application where users can share and discover different recipes. It includes features like user authentication and authorization, recipe CRUD operations and there are still many ongoing additions of new features.
+LoveRecipes is a web application where users can share and discover different recipes. It includes features like user authentication and authorization, searching recipes, recipe CRUD operations, saving recipes and there are still many ongoing additions of new features.
 
 **MySQL Database**
 

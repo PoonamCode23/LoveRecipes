@@ -5,7 +5,7 @@ from .models import Favorite
 from recipe_manager.models import Recipe
 
 
-@login_required
+@login_required(login_url='/login/')
 def save_recipe(request):
 
     if request.method == 'POST':
@@ -36,8 +36,11 @@ def save_recipe(request):
 def saved_recipes(request):
     title = 'LoveRecipes: My Favourite Recipes'
     user = request.user
-    saved_recipes = Favorite.objects.filter(user=user)
-    saved_recipes_count = saved_recipes.count()
+    if user.is_authenticated:
+        saved_recipes = Favorite.objects.filter(user=user)
+    else:
+        saved_recipes = []
+
     context = {
         'title': title,
         'saved_recipes': saved_recipes,

@@ -8,17 +8,20 @@
 
 <main class="container">
     <section>
-        <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center justify-content-between mb-4">
             <!-- align items at same row -->
         </div>
 
         {% if search_message %}
-        <div class="search-message">
-            {{ search_message|linebreaks }}
+        <div class="search-message mb-5">
+            <h3>{{ search_message|linebreaks }}</h3>
         </div>
         {% endif %}
 
+        {% if latest_recipes and not keyword %}
         <h3 class="recent_recipe_title">Our Recent Recipes</h3>
+        {%endif%}
+
         <div class="row">
             {% for latest_recipe in latest_recipes %}
             <div class="col-md-2">
@@ -42,9 +45,11 @@
             </div>
             {% endfor %}
         </div>
+       
 
-
+        {% if recipes and not keyword %}
         <h3 class="other_recipe_title mb-4">Other Recipes</h3>
+        {%endif%}
 
         <div class="row">
             {% if recipes %}
@@ -59,7 +64,8 @@
                             <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
                             {# template does not support calling methods directly in templates. needs to be performed in the view and the result passed to the template context #}
                             
-                        {% if is_favouite %}
+                              {% if recipe.is_favorite %}
+
                             <form method="post" action=" {% url 'save_recipe:save_recipe' %}" class="text-decoration-none">
                                 {% csrf_token %}
                                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
@@ -81,6 +87,7 @@
                             <div class="username">
                                 Recipe By: <a href="{% url 'users:view_user_recipes' recipe.user_id %}" class="recipe-link">{{ recipe.user }}</a>
                             </div>
+                            
                             <div class="mt-5 mb-5 d-flex flex-wrap">
                                 {% for tag in recipe.tags %}
                                 <form method="GET" action="">

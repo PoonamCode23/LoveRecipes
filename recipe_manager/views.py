@@ -93,7 +93,7 @@ def update_recipe(request, recipe_id):
 def view_recipes(request):
     title = 'LoveRecipes'
     user = request.user
-    # Order by descending created_at(latest)
+    # Order by descending created_at (latest)
     latest_recipes = Recipe.objects.order_by('-created_at')[:6]
 
     # Fetch random recipes
@@ -111,12 +111,14 @@ def view_recipes(request):
             'title': recipe.title,
             'description': recipe.description,
             'tags': json.loads(recipe.tags),
-            'user': recipe.user.username,
-            'user_id': recipe.user.id,
-            'is_favorite': Favorite.objects.filter(user=user, recipe=recipe).exists() if user.is_authenticated else False
+            'user': recipe.user.username if recipe.user.is_authenticated else 'Anonymous',
+            'user_id': recipe.user.id if recipe.user.is_authenticated else None,
+            'is_favorite': False,
         }
+        if user.is_authenticated:
+            recipe_data['is_favorite'] = Favorite.objects.filter(
+                user=user, recipe=recipe).exists()
         recipe_list.append(recipe_data)
-
     context = {
         'recipes': recipe_list,
         'page_obj': page_obj,

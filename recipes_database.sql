@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2024 at 08:15 PM
+-- Generation Time: Jul 13, 2024 at 07:52 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -145,7 +145,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (53, 'Can add social application token', 14, 'add_socialtoken'),
 (54, 'Can change social application token', 14, 'change_socialtoken'),
 (55, 'Can delete social application token', 14, 'delete_socialtoken'),
-(56, 'Can view social application token', 14, 'view_socialtoken');
+(56, 'Can view social application token', 14, 'view_socialtoken'),
+(57, 'Can add favorite', 15, 'add_favorite'),
+(58, 'Can change favorite', 15, 'change_favorite'),
+(59, 'Can delete favorite', 15, 'delete_favorite'),
+(60, 'Can view favorite', 15, 'view_favorite');
 
 -- --------------------------------------------------------
 
@@ -172,11 +176,12 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(12, 'pbkdf2_sha256$720000$en0fuCzXGLBbuIdw68sZng$ixumqmokNIXWqSWKb6Glb2PgaJmyfUEO3YlzWXPt9xc=', '2024-07-08 16:51:45.900833', 0, 'Jasmine', '', '', 'jasmine@234gmail.com', 0, 1, '2024-07-01 14:09:35.845140'),
-(13, 'pbkdf2_sha256$720000$2evAbcP80N6cVJWWgZ8bms$PKpp7W09Sw43/eCZ0TqElkrp2RRe1RgpFsioXKd1QBI=', '2024-07-06 15:27:02.837686', 0, 'Poonam', '', '', 'poonamkulung2022@gmail.com', 0, 1, '2024-07-01 14:24:23.959530'),
-(14, 'pbkdf2_sha256$720000$yRyhdNDjaRofvAw3eSXRNk$Gs2nm3MhupK/gt3fA1NvqwO+J3y6lWsIuXAwB1pg05s=', '2024-07-04 16:48:24.226449', 0, 'Varoof', '', '', 'varoof@gmail.com', 0, 1, '2024-07-01 14:28:37.647590'),
-(15, 'pbkdf2_sha256$720000$QQVm6Mz3fJ9bW5YuZcFMcW$jwnNA0kGKTcgnT86IumKHHdbZdj/TaAUy/ofu96YZCA=', '2024-07-08 17:07:55.323787', 0, 'Puchu', '', '', 'puchupuchu@gmail.com', 0, 1, '2024-07-01 15:39:24.462391'),
-(16, 'pbkdf2_sha256$720000$99KJl4UjTZYXz0dGGYg7dh$0S1C32mEI0IyhAlBjaLVW4aX6JjWWk7EJNYo9ZPnAwQ=', '2024-07-08 17:24:15.208972', 0, 'ChefMartyl', '', '', 'chefmartyl@gmail.com', 0, 1, '2024-07-08 17:06:10.178890');
+(12, 'pbkdf2_sha256$720000$en0fuCzXGLBbuIdw68sZng$ixumqmokNIXWqSWKb6Glb2PgaJmyfUEO3YlzWXPt9xc=', '2024-07-11 16:07:10.600043', 0, 'Jasmine', '', '', 'jasmine@234gmail.com', 0, 1, '2024-07-01 14:09:35.845140'),
+(13, 'pbkdf2_sha256$720000$2evAbcP80N6cVJWWgZ8bms$PKpp7W09Sw43/eCZ0TqElkrp2RRe1RgpFsioXKd1QBI=', '2024-07-12 11:39:44.152583', 0, 'Poonam', '', '', 'poonamkulung2022@gmail.com', 0, 1, '2024-07-01 14:24:23.959530'),
+(14, 'pbkdf2_sha256$720000$yRyhdNDjaRofvAw3eSXRNk$Gs2nm3MhupK/gt3fA1NvqwO+J3y6lWsIuXAwB1pg05s=', '2024-07-12 14:31:50.874811', 0, 'Varoof', '', '', 'varoof@gmail.com', 0, 1, '2024-07-01 14:28:37.647590'),
+(15, 'pbkdf2_sha256$720000$QQVm6Mz3fJ9bW5YuZcFMcW$jwnNA0kGKTcgnT86IumKHHdbZdj/TaAUy/ofu96YZCA=', '2024-07-11 11:29:11.780928', 0, 'Puchu', '', '', 'puchupuchu@gmail.com', 0, 1, '2024-07-01 15:39:24.462391'),
+(16, 'pbkdf2_sha256$720000$99KJl4UjTZYXz0dGGYg7dh$0S1C32mEI0IyhAlBjaLVW4aX6JjWWk7EJNYo9ZPnAwQ=', '2024-07-13 17:17:59.699666', 0, 'ChefMartyl', '', '', 'chefmartyl@gmail.com', 0, 1, '2024-07-08 17:06:10.178890'),
+(17, 'pbkdf2_sha256$720000$Exyihsey1NmJDJRx90fxKy$SZAVHtvOCcaiN9A94lYtPpgsxuS2DA6jfGoet0zUqr0=', '2024-07-12 14:57:33.423333', 0, 'Hemanta', '', '', 'hemanta@gmail.com', 0, 1, '2024-07-12 14:54:45.839871');
 
 -- --------------------------------------------------------
 
@@ -245,6 +250,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (5, 'contenttypes', 'contenttype'),
 (7, 'recipe_manager', 'recipe'),
 (8, 'recipe_manager', 'tag'),
+(15, 'save_recipe', 'favorite'),
 (6, 'sessions', 'session'),
 (9, 'sites', 'site'),
 (12, 'socialaccount', 'socialaccount'),
@@ -310,7 +316,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (44, 'recipe_manager', '0005_remove_recipe_tags_delete_tag_recipe_tags', '2024-07-01 11:25:46.074953'),
 (45, 'recipe_manager', '0006_alter_recipe_image', '2024-07-01 11:25:46.079951'),
 (50, 'recipe_manager', '0001_initial', '2024-07-01 14:26:19.663719'),
-(51, 'recipe_manager', '0002_alter_recipe_user', '2024-07-01 14:26:20.035554');
+(51, 'recipe_manager', '0002_alter_recipe_user', '2024-07-01 14:26:20.035554'),
+(52, 'save_recipe', '0001_initial', '2024-07-10 11:50:28.962876');
 
 -- --------------------------------------------------------
 
@@ -329,6 +336,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('7mfloxisae9pel2f2echy6gw48o8in50', '.eJxVjDsOwyAQRO9CHSHzW3DK9D4DgoUNTiKQjF1FuXtsyUVSzrw382Y-bGvxW8-LnxO7MgHs8lvGgM9cD5Ieod4bx1bXZY78UPhJO59ayq_b6f4dlNDLviZraXQanTNaa8yOpCURUUMW0aox04AyakUYaXDSBCAAiUrsQYAh9vkCDhE37Q:1sSgSD:TO3NYTm6bX_GFAiipfXPwQnFcezAYAed5kCFGoLFrK0', '2024-07-27 17:22:37.542279'),
 ('g6j1tmu99buum65em22k9pj4eb8chnlm', 'e30:1sOENT:5nuAw2yF_sE7HzLQoNiF8EQlycqQpf8En1buO68o5tk', '2024-07-15 10:35:19.256481'),
 ('oske5f253hhujffvx7j0iv5c7acn4m67', '.eJxVjDsOwyAQRO9CHSHzW3DK9D4DgoUNTiKQjF1FuXtsyUVSzrw382Y-bGvxW8-LnxO7MgHs8lvGgM9cD5Ieod4bx1bXZY78UPhJO59ayq_b6f4dlNDLviZraXQanTNaa8yOpCURUUMW0aox04AyakUYaXDSBCAAiUrsQYAh9vkCDhE37Q:1sQsNE:es5k390IlkUS3UFOKmVxPx26zfbgFC6QxcDmTSHxciQ', '2024-07-22 17:42:00.326428'),
 ('sqt1g3kxu7v7t9a1gw94bimeu50wlems', '.eJxVjDsOwjAQBe_iGlk2_sWU9DmDtfbu4gBypDipEHeHSCmgfTPzXiLBtta0dVrShOIitBGn3zFDeVDbCd6h3WZZ5rYuU5a7Ig_a5TgjPa-H-3dQoddvrRRYq533ANlHzSYUNkW5QMUbVOwGxWfkHGyk7EhZpBIDDA4jMxgj3h8HSTiZ:1sOaHH:O91Mt_ssEPT0qJKU-8xrxjJ19NyGELObzHhAIfgbkcM', '2024-07-16 09:58:23.610914'),
@@ -387,7 +395,43 @@ INSERT INTO `recipe_manager_recipe` (`id`, `title`, `description`, `image`, `ing
 (11, 'Homemade Sushi', 'Sushi rolls can be filled with any ingredients you choose. Try smoked salmon instead of imitation crabmeat. Serve with teriyaki sauce and wasabi.', 'images/sushi.webp', '[\"1 \\u2153 cups water\", \"\\u2154 cup uncooked short-grain white rice\", \"3 tablespoons rice vinegar\", \"3 tablespoons white sugar\", \"1 \\u00bd teaspoons salt\", \"4 sheets nori seaweed sheets\", \"\\u00bd pound imitation crabmeat, flaked\", \"1 avocado - peeled, pitted, and sliced\", \"\\u00bd cucumber, peeled, cut into small strips\", \"2 tablespoons pickled ginger\"]', '[\"Gather all ingredients. Preheat the oven to 300 degrees F (150 degrees C).\", \"Bring water to a boil in a medium pot; stir in rice. Reduce heat to medium-low, cover, and simmer until rice is tender and water has been absorbed, 20 to 25 minutes.\", \"Mix rice vinegar, sugar, and salt in a small bowl. Gently stir into cooked rice in the pot and set aside.\", \"Lay nori sheets on a baking sheet.\", \"Heat nori in the preheated oven until warm, 1 to 2 minutes.\", \"Center 1 nori sheet on a bamboo sushi mat. Use wet hands to spread a thin layer of rice on top. Arrange 1/4 of the crabmeat, avocado, cucumber, and pickled ginger over rice in a line down the center.\", \"Lift one end of the mat and roll it tightly over filling to make a complete roll. Repeat with remaining ingredients.\", \"Use a wet, sharp knife to cut each roll into 4 to 6 slices.\"]', '1 hr 10 mins', 8, '[\"Seafood\", \"Japanese\"]', '2024-07-04 16:52:02.423271', '2024-07-04 16:52:02.423271', 14),
 (12, 'Butter Chicken', 'This butter chicken recipe is one of my favorite Indian dishes. It features a full-flavored sauce that complements the chicken well.', 'images/Easy-Butter-Chicken-TIMG.jpg', '[\"2 tablespoons peanut oil, divided\", \"1 shallot, finely chopped\", \"\\u00bc white onion, chopped\", \"2 tablespoons butter\", \"1 tablespoon ginger garlic paste\", \"2 teaspoons lemon juice\", \"2 teaspoons garam masala, divided\", \"1 teaspoon chili powder\", \"1 teaspoon ground cumin\", \"1 cup tomato puree\", \"\\u00bc cup plain yogurt\", \"1 pinch salt and ground black pepper to taste\", \"1 pound boneless, skinless chicken thighs, cut into bite-size pieces\", \"\\u00bc teaspoon cayenne pepper, or to taste\", \"\\u00bc cup water\"]', '[\"Heat 1 tablespoon oil in a large saucepan over medium-high heat. Saut\\u00e9 shallot and onion until soft and translucent, about 5 minutes.\", \"Stir in butter, ginger-garlic paste, lemon juice, 1 teaspoon garam masala, chili powder, cumin, and bay leaf. Cook and stir for 1 minute. Add tomato sauce, and cook for 2 minutes, continuing to frequently stir.\", \"Stir in half-and-half and yogurt. Reduce heat to low, and simmer for 10 minutes, frequently stirring. Season with salt and pepper. Remove from heat and set aside.\", \"Heat remaining 1 tablespoon oil in a large heavy skillet over medium heat. Cook chicken until lightly browned, about 10 minutes.\", \"Reduce heat, and season with remaining 1 teaspoon garam masala and cayenne. Stir in a few spoonfuls of sauce, and simmer until liquid has reduced, and chicken is no longer pink. Add cooked chicken into sauce and stir together.\", \"Dissolve cornstarch into water, then mix into the sauce. Cook for 5 to 10 minutes, or until thickened.\", \"Serve over rice with naan.\"]', '35 mins', 4, '[\"Chicken\", \"Indian recipes\", \"Non - veg recipes\"]', '2024-07-05 09:24:32.410282', '2024-07-05 09:24:32.410282', 13),
 (13, 'Air Fryer Potato Chips', 'Use your air fryer to make these yummy sweet potato chips.', 'images/p.webp', '[\"1 large (8 ounces) sweet potato\", \"1 tablespoon canola oil\", \"1/4 teaspoon sea salt\", \"1/4 teaspoon freshly ground black pepper\", \"cooking spray\"]', '[\"Slice potato into 1/16-inch-thick rounds using a mandoline. Put potato slices in a large bowl of cold water; soak about 20 minutes. Drain and pat dry with paper towels. Wipe out bowl.\", \"Return potato slices to dried bowl. Add oil, salt, and pepper; toss gently to coat.\", \"Preheat air fryer to 350 degrees F (175 degrees C). Lightly coat air fryer basket with cooking spray. Working in batches if needed, arrange potato slices in an even layer in basket (do not overcrowd).\", \"Cook until lightly golden and crispy, 12 to 16 minutes, turning and rearranging chips into an even layer every 4 minutes. Watch closely during the last 2 to 3 minutes of cooking. Check chips about every 30 seconds, using tongs to remove golden chips from the basket as needed to avoid overcooking and ending up with bitter chips.\", \"Let chips cool about 5 minutes. Chips will continue to crisp as they cool. Store in an airtight container up to 3 days.\"]', '40 mins', 4, '[\"Chips\", \"Snacks\", \"Low - fat recipes\", \"Low - calorie recipes\"]', '2024-07-05 09:28:43.176373', '2024-07-05 09:28:43.176373', 12),
-(15, 'Omlette', 'Here\'s everything you need to know how to pull off a perfect omlette at home.', 'images/omlette.jfif', '[\"2 large eggs\", \"Salt and pepper to taste\", \"Butter or oil for cooking\"]', '[\"Beat eggs with salt and pepper until well combined.\", \"Heat butter or oil in a pan.\", \"Pour eggs into the pan until the edges start to set.\"]', '10 mins', 1, '[\"Breakfast recipes\", \"Easy recipes\"]', '2024-07-08 17:42:00.083433', '2024-07-08 17:42:00.083433', 16);
+(15, 'Omlette', 'Here\'s everything you need to know how to pull off a perfect omlette at home.', 'images/omlette.jfif', '[\"2 large eggs\", \"Salt and pepper to taste\", \"Butter or oil for cooking\"]', '[\"Beat eggs with salt and pepper until well combined.\", \"Heat butter or oil in a pan.\", \"Pour eggs into the pan until the edges start to set.\"]', '10 mins', 1, '[\"Breakfast recipes\", \"Easy recipes\"]', '2024-07-08 17:42:00.083433', '2024-07-08 17:42:00.083433', 16),
+(16, 'Mango Lassi', 'This is a very refreshing summer drink and takes little effort to make as well.', 'images/Mango-lassi.jpg', '[\"Qui iure laborum Do\", \"Harum rem dolore fug\", \"Porro occaecat nihil\", \"Perferendis aperiam\"]', '[\"Fugiat eum totam eni\", \"Repudiandae mollitia\", \"Tempora sed non libe\", \"Molestiae dolor modi\"]', '10 mins', 1, '[\"Drinks\", \"Summer recipes\"]', '2024-07-13 17:13:57.040391', '2024-07-13 17:13:57.040391', 17),
+(17, 'Garlic Butter Shrimp', 'Garlic Butter Shrimp is a savory dish where tender shrimp are  sautéed in a flavorful mixture of butter and minced garlic.', 'images/shrimp.jpg', '[\"Distinctio Voluptat\", \"In amet irure provi\", \"Voluptate non nostru\", \"Eveniet veniam vel\", \"Qui ut nesciunt vol\", \"Accusantium laborum\"]', '[\"Itaque tempor labore\", \"Quod et in officiis\", \"Consectetur consequ\", \"Quaerat id sunt al\"]', '1 hr 40 mins', 3, '[\"Seafood\", \"Non - veg recipes\"]', '2024-07-13 17:21:48.257966', '2024-07-13 17:21:48.257966', 16);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `save_recipe_favorite`
+--
+
+CREATE TABLE `save_recipe_favorite` (
+  `id` bigint(20) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `recipe_id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `save_recipe_favorite`
+--
+
+INSERT INTO `save_recipe_favorite` (`id`, `created_at`, `recipe_id`, `user_id`) VALUES
+(7, '2024-07-11 10:41:28.137405', 3, 13),
+(8, '2024-07-11 11:29:22.470336', 3, 15),
+(10, '2024-07-11 11:29:58.438020', 5, 15),
+(11, '2024-07-11 11:30:15.350509', 10, 15),
+(21, '2024-07-11 16:31:05.057926', 11, 12),
+(25, '2024-07-12 11:14:36.581423', 4, 13),
+(26, '2024-07-12 11:14:45.319460', 5, 13),
+(27, '2024-07-12 11:17:29.564094', 2, 13),
+(28, '2024-07-12 11:19:40.532486', 13, 13),
+(31, '2024-07-12 11:25:35.756337', 15, 13),
+(32, '2024-07-12 11:27:11.294787', 11, 13),
+(33, '2024-07-12 14:07:10.058920', 10, 16),
+(36, '2024-07-12 14:32:06.917049', 2, 14),
+(39, '2024-07-12 14:58:35.122749', 5, 17),
+(41, '2024-07-13 17:22:37.503017', 17, 16);
 
 -- --------------------------------------------------------
 
@@ -557,6 +601,14 @@ ALTER TABLE `recipe_manager_recipe`
   ADD KEY `recipe_manager_recipe_user_id_7f6c5392_fk_auth_user_id` (`user_id`);
 
 --
+-- Indexes for table `save_recipe_favorite`
+--
+ALTER TABLE `save_recipe_favorite`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `save_recipe_favorite_user_id_recipe_id_06b09f66_uniq` (`user_id`,`recipe_id`),
+  ADD KEY `save_recipe_favorite_recipe_id_93dd245b_fk_recipe_ma` (`recipe_id`);
+
+--
 -- Indexes for table `socialaccount_socialaccount`
 --
 ALTER TABLE `socialaccount_socialaccount`
@@ -618,13 +670,13 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
@@ -648,13 +700,13 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `django_site`
@@ -666,7 +718,13 @@ ALTER TABLE `django_site`
 -- AUTO_INCREMENT for table `recipe_manager_recipe`
 --
 ALTER TABLE `recipe_manager_recipe`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `save_recipe_favorite`
+--
+ALTER TABLE `save_recipe_favorite`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `socialaccount_socialaccount`
@@ -747,6 +805,13 @@ ALTER TABLE `django_admin_log`
 --
 ALTER TABLE `recipe_manager_recipe`
   ADD CONSTRAINT `recipe_manager_recipe_user_id_7f6c5392_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+--
+-- Constraints for table `save_recipe_favorite`
+--
+ALTER TABLE `save_recipe_favorite`
+  ADD CONSTRAINT `save_recipe_favorite_recipe_id_93dd245b_fk_recipe_ma` FOREIGN KEY (`recipe_id`) REFERENCES `recipe_manager_recipe` (`id`),
+  ADD CONSTRAINT `save_recipe_favorite_user_id_58fcd2d6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 
 --
 -- Constraints for table `socialaccount_socialaccount`

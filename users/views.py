@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from recipe_manager.models import Recipe
 import json
+import sweetify
 
 
 def register(request):
@@ -38,11 +39,19 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            sweetify.success(
+                request,
+                f'You are logged in as {username}.',
+                timer=2500,
+                position='top-end',
+
+            )
             return redirect('users:view_my_recipes')
         else:
             messages.error(request, 'Invalid username or password.')
 
     return render(request, 'login.html', context)
+
 
 @login_required
 def view_my_recipes(request):

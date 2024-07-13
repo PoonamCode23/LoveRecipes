@@ -7,10 +7,21 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 <main class="container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+        {% endfor %}
+    </ul>
+{% endif %}
     <h3 class="mb-4">My Favourite Recipes</h3>
 
     {% if not saved_recipes %}
-    <p>You haven't saved any recipes yet! Click on the heart icon of your favourite recipe to save it here.</p>
+
+    <div class="welcome">
+        You haven't saved any recipes yet! Click on the heart icon of your favourite recipe to save it here.
+    </div>
+   
     {% else %}
     <div class="row">
         {% for saved_recipe in saved_recipes %}
@@ -29,16 +40,16 @@
                         </form>
                     </div>
                     <p class="card-text">{{ saved_recipe.recipe.description }}</p>
-                    <div class="username">
-                        Recipe By: <a href="" class="recipe-link">{{ saved_recipe.recipe.user.username }}</a>
+                    <div class="username mb-5">
+                        Recipe By: <a href="{% url 'users:view_user_recipes' saved_recipe.recipe.user_id %}" class="recipe-link">{{ saved_recipe.recipe.user.username }}</a>
                     </div>
-                    <a href="" class="button start-1 bottom-0 mb-3">Full Recipe</a>
+                    <a href="{% url 'recipe_manager:recipe_details' saved_recipe.recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
                    
                     {% if request.user.is_authenticated and request.user.id == saved_recipe.recipe.user.id %}                   
-                    <a href=" " class="update-link" style="color: #61bd4d">
+                    <a href="{% url 'recipe_manager:update_recipes' saved_recipe.recipe.id %}" class="update-link" style="color: #61bd4d">
                         <i class="ph-bold ph-pencil"></i>
                     </a>
-                    <form method="post" id="deleterecipe-{{ recipe.id }}" action="">
+                    <form method="post" id="deleterecipe-{{ recipe.id }}" action="{% url 'recipe_manager:delete_recipes' saved_recipe.recipe.id %}">
                         {% csrf_token %}
                         <button type="submit" onclick="deleteConfirm(event, {{ recipe.id }})" class="btn delete-btn">
                             <i class="ph-bold ph-trash"></i>

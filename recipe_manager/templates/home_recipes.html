@@ -18,10 +18,11 @@
         </div>
         {% endif %}
 
-        {% if latest_recipes and not keyword %}
+        {% if latest_recipes and not keyword%}
         <h3 class="recent_recipe_title">Our Recent Recipes</h3>
-        {%endif%}
-
+    {% endif %}
+    
+   
         <div class="row">
             {% for latest_recipe in latest_recipes %}
             <div class="col-md-2">
@@ -45,12 +46,17 @@
             </div>
             {% endfor %}
         </div>
-       
 
-        {% if recipes and not keyword %}
-        <h3 class="other_recipe_title mb-4">Other Recipes</h3>
-        {%endif%}
-
+    
+    
+        {% if recipes %}
+        {% if tag_message %}
+            <h3 class="mb-4">{{ tag_message }}</h3>
+        {% elif not keyword %}
+            <h3 class="other_recipe_title mb-4">Other Recipes</h3>
+        {% endif %}
+        {% endif %}
+    
         <div class="row">
             {% if recipes %}
                 {% for recipe in recipes %}
@@ -64,7 +70,7 @@
                             <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
                             {# template does not support calling methods directly in templates. needs to be performed in the view and the result passed to the template context #}
                             
-                              {% if recipe.is_favorite %}
+                            {% if recipe.is_favorite %}
 
                             <form method="post" action=" {% url 'save_recipe:save_recipe' %}" class="text-decoration-none">
                                 {% csrf_token %}
@@ -88,15 +94,17 @@
                                 Recipe By: <a href="{% url 'users:view_user_recipes' recipe.user_id %}" class="recipe-link">{{ recipe.user }}</a>
                             </div>
                             
+
                             <div class="mt-5 mb-5 d-flex flex-wrap">
                                 {% for tag in recipe.tags %}
-                                <form method="GET" action="">
+                                <form method="GET" action="{% url 'recipe_manager:view_recipes' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="tag" value="{{ tag }}">
                                     <button type="submit" class="tags">{{ tag }}</button>
                                 </form>
                                 {% endfor %}
                             </div>
+                            
                             <a href="{% url 'recipe_manager:recipe_details' recipe.id %}" class="button start-1 bottom-0 mb-3">Full Recipe</a>
                             {% if request.user.is_authenticated and recipe.user_id == request.user.id %}
                             <a href="{% url 'recipe_manager:update_recipes' recipe.id %}" class="update-link" style="color: #61bd4d">

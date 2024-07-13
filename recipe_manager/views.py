@@ -99,6 +99,17 @@ def view_recipes(request):
     # Fetch random recipes
     recipes = Recipe.objects.order_by('?')
 
+    message = ""
+
+    tag = request.GET.get('tag')
+    if tag:
+        # SELECT * FROM Recipe WHERE tags ILIKE '%desserts%';
+        recipes = Recipe.objects.filter(tags__icontains=tag).order_by('?')
+        message = f"Explore '{tag.upper()}' Recipes"
+
+        # dont show latest recipes if a tag is present
+        latest_recipes = []
+
     paginator = Paginator(recipes, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -123,7 +134,8 @@ def view_recipes(request):
         'recipes': recipe_list,
         'page_obj': page_obj,
         'latest_recipes': latest_recipes,
-        'title': title
+        'title': title,
+        'tag_message': message
     }
     return render(request, 'home_recipes.html', context)
 

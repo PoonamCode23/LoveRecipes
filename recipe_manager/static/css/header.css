@@ -50,6 +50,10 @@
 .dropdown-item {
     padding: 10px;
 }
+.dropdown-item:active {
+    background-color: #F88379;
+    color: white !important;
+}
 
 .dropdown-item:hover {
     color: #F88379;
@@ -58,4 +62,3 @@
 .navbar-nav .nav-link.active {
     color: #F88379;
 }
-

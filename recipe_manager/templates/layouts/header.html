@@ -78,18 +78,19 @@
                             Recipes
                         </button>
                         <ul class="dropdown-menu fs-5" aria-labelledby="recipeDropdown">
-                            <li><a class="dropdown-item" href="">Breakfast</a></li>
-                            <li><a class="dropdown-item" href="">Lunch</a></li>
-                            <li><a class="dropdown-item" href="">Dinner</a></li>
-                            <li><a class="dropdown-item" href="">Salads</a></li>
-                            <li><a class="dropdown-item" href="">Healthy</a></li>
-                            <li><a class="dropdown-item" href="">Soups</a></li>
-                            <li><a class="dropdown-item" href="">Desserts</a></li>
-                            <li><a class="dropdown-item" href="">Bakery</a></li>
-                            <li><a class="dropdown-item" href="">Drinks</a></li>
-                            <li><a class="dropdown-item" href="">Vegan</a></li>
-                            <li><a class="dropdown-item" href="">Non-Veg</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Breakfast">Breakfast</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Lunch">Lunch</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Dinner">Dinner</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Salads">Salads</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Healthy">Healthy</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Soups">Soups</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Desserts">Desserts</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Bakery">Bakery</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Drinks">Drinks</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Vegan">Vegan</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Non-Veg">Non-Veg</a></li>
                         </ul>
+                        
 
                     </div>
                     <div class="dropdown">
@@ -97,21 +98,22 @@
                             Ingredients
                         </button>
                         <ul class="dropdown-menu fs-5" aria-labelledby="ingredientDropdown">
-                            <li><a class="dropdown-item" href="">Chicken</a></li>
-                            <li><a class="dropdown-item" href="">Seafood</a></li>
-                            <li><a class="dropdown-item" href="">Flour</a></li>
-                            <li><a class="dropdown-item" href="">Fruits</a></li>
-                            <li><a class="dropdown-item" href="">Vegetables</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Chicken">Chicken</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Seafood">Seafood</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Flour">Flour</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Fruits">Fruits</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Vegetables">Vegetables</a></li>
                         </ul>
+                        
                     </div>
                     <div class="dropdown">
                         <button class="btn bg-none border-none dropdown-toggle fs-5" type="button" id="occasionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             Occasions </button>
                         <ul class="dropdown-menu fs-5" aria-labelledby="occasionDropdown">
-                            <li><a class="dropdown-item" href="">Summer Recipes</a></li>
-                            <li><a class="dropdown-item" href="">Winter Recipes</a></li>
-                            <li><a class="dropdown-item" href="">Festivals</a></li>
-                            <li><a class="dropdown-item" href="">Birthday</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Summer Recipes">Summer Recipes</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Winter Recipes">Winter Recipes</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Festivals">Festivals</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Birthday">Birthday</a></li>
                         </ul>
                     </div>
                     <div class="dropdown">
@@ -119,14 +121,12 @@
                             Cuisines
                         </button>
                         <ul class="dropdown-menu fs-5" aria-labelledby="cuisineDropdown">
-                            <li><a class="dropdown-item" href="">Nepali</a></li>
-                            <li><a class="dropdown-item" href="">Italian</a></li>
-                            <li><a class="dropdown-item" href="">Indian</a></li>
-                            <li><a class="dropdown-item" href="">Japanese</a></li>
-                            <li><a class="dropdown-item" href="">Chinese</a></li>
-                            <li><a class="dropdown-item" href="">Korean</a></li>
-                            <li><a class="dropdown-item" href="">Filipino</a></li>
-                            <li><a class="dropdown-item" href="">Mexican</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Nepali">Nepali</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Italian">Italian</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Indian">Indian</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Japanese">Japanese</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Chinese">Chinese</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipe_manager:view_recipes' %}?tag=Korean">Korean</a></li>
                         </ul>
                     </div>
                 </div>

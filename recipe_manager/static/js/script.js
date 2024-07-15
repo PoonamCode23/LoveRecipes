@@ -169,3 +169,38 @@ function resetForm() {
     document.querySelector('form').reset();
     document.getElementById('file-preview').src = 'https://placehold.co/200x200';
 } 
+
+// js for review form
+  
+function resetRatingForm() {
+    // Reset the form using native reset method
+    document.getElementById('ratingForm').reset();
+
+    // Remove 'checked' class from all stars
+    var stars = document.querySelectorAll('.star');
+    stars.forEach(function(star) {
+        star.classList.remove('checked');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Select all elements with class 'star' for rating selection
+    var stars = document.querySelectorAll('.star');
+
+    stars.forEach(function(star) {
+        star.addEventListener('click', function() {
+            var rating = this.getAttribute('data-rating'); // Get rating value from data attribute
+            document.getElementById('rating').value = rating; // Set hidden input value to selected rating
+            
+            // Remove 'checked' class from all stars
+            stars.forEach(function(s) {
+                s.classList.remove('checked');
+            });
+
+            // Add 'checked' class to clicked star
+            this.classList.add('checked');
+        });
+    });
+});
+
+

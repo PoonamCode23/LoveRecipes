@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('categorize.urls')),
     path('', include('users.urls')),
     path('', include('save_recipe.urls')),
+    path('',  include('ratings_reviews.urls')),
 
     # when we will upload image, it will allow to create URL automatically.
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

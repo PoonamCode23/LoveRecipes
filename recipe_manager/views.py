@@ -7,6 +7,7 @@ from .models import Recipe
 from django.conf import settings  # for deleting image file
 import os  # deleting media folder
 from save_recipe.models import Favorite
+from ratings_reviews.models import Review
 from django.contrib.auth.decorators import login_required
 import json
 import sweetify
@@ -144,15 +145,17 @@ def recipe_details(request, recipe_id):
     title = 'LoveRecipes: Recipe details'
     recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-    # Assuming ingredients and directions are stored as JSONField in Recipe model
     ingredients = json.loads(recipe.ingredients)
     directions = json.loads(recipe.directions)
+
+    reviews = Review.objects.filter(recipe=recipe)
 
     context = {
         'recipe': recipe,
         'ingredients': ingredients,
         'directions': directions,
-        'title': title
+        'title': title,
+        'reviews': reviews
     }
 
     return render(request, 'recipe_details.html', context)

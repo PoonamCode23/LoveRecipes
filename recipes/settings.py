@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'categorize',
     'users',
     'save_recipe',
+    'ratings_reviews',
     'sweetify',
     'django.contrib.sites',
     'allauth',

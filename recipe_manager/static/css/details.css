@@ -65,7 +65,7 @@
         width: 100%;
         text-align: left;
     }
-
+/* 
 
     .star {
         display: inline-block;
@@ -111,8 +111,27 @@
     .star2.checked,
     .star2.checked~.star2 {
         color:  #F88379;
+    } */
+    
+    /* Base styles for all stars */
+    .star {
+        display: inline-block;
+        font-size: 40px;
+        color: #ccc;  /* Default star color */
+        cursor: default; /* Disable pointer cursor */
     }
-
+    
+    .star:hover,
+    .star:hover ~ .star {
+        color: #F88379;
+    }
+    
+    .star.checked,
+    .star.checked ~ .star {
+        color: #F88379;
+    }
+    
+    
     .button{
         background-color: #F88379;
         border: none;
@@ -127,5 +146,12 @@
         margin-left: 1054px;
     }
 
+    .editicon {
+        color:  #F88379;
+        border: none;
+        background-color: transparent;
 
-   
+    }
+   .list-group-item{
+    border-block-color: revert;
+   }

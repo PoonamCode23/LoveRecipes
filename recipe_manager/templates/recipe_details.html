@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
+        
 
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -49,7 +50,7 @@
                 </div>
             </div>
 
-            <!-- Ingredients -->
+
             <div class="col-12 col-lg-4">
                 <div class="ingredients">
                     <h3>Ingredients</h3>
@@ -67,47 +68,134 @@
     </div>
 </div>
 
-<h2 class="review_title">Reviews</h2>
+{% if reviews %}
+    {% for review in reviews %}
+        <!--ratings and reviews shown if user has already added reviews-->
 
-<form action="" method="POST" id="ratingForm">
-    {% csrf_token %}
-    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-    <div class="container mt-3">
-        <div class="card p-5">
-            <div class="row align-items-center">
-                <div class="col-2 mb-3">
-                    <img src="{{ recipe.image.url }}" class="rounded-circle mt-2 w-75 h-75">
+        <div class="container mt-3 mb-3">
+            <ul class="list-group">
+                <div class="col-12 col-lg-8">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-9">
+                                <h3>My Review</h3>
+                            </div>
+                            {% if review.user == request.user %}
+                                <div class="col-3">
+                                    <button type="button" class="editicon" onclick="showForm('updateRating')">
+                                        <i class="ph-fill ph-pencil"></i>Edit
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="rating mb-3">
+                                    <!-- ratings is a field in the database table -->
+                                    <input type="hidden" name="rating" id="rating" value="{{ review.rating }}">
+                                    <!--add filter is used to convert a string to an integer -->
+                                    {% for i in '54321' %}
+                                        <label for="star{{ i }}" class="star {% if review.ratings == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                                            
+                                            <i class="ph-fill ph-star"></i>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                            <div class="col-6">
+                                <p>{{ review.created_at|date:"F j, Y" }}</p>
+                            </div>
+                            <p class="fs-4">{{ review.comments }}</p>
+                        </div>
+                    </li>
                 </div>
-                <div class="col-10">
-                    <h3>{{ recipe.title }}</h3>
+            </ul>
+        </div>
+
+        <!--form triggerd on clicking on update icon-->
+        <div id="updateRating" style="display: none;">
+            <form action="" method="POST" id="updateRatingForm">
+                {% csrf_token %}
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                <div class="container mt-3">
+                    <div class="card p-5">
+                        <div class="row align-items-center">
+                            <div class="col-2 mb-3">
+                                <img src="{{ recipe.image.url }}" class="rounded-circle mt-2 w-75 h-75">
+                            </div>
+                            <div class="col-10">
+                                <h3>{{ recipe.title }}</h3>
+                            </div>
+                            <div class="comment-box ml-2">
+                                <h4>Your Rating</h4>
+                                <div class="rating mb-3">
+                                    <input type="hidden" name="rating" id="rating-edit" value="{{ review.rating }}">
+                                    {% for i in "12345" %}
+                                        <label for="star{{ i }}" class="star star-edit" data-rating-edit="{{ i }}" {% if review.rating == i %}data-checked="true"{% endif %}>
+                                            <i class="ph-fill ph-star"></i>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                <h4>Your Review</h4>
+                                <div class="comment-area mb-4">
+                                    <textarea class="form-control" name="review" placeholder="What is your view?" rows="4">{{ review.comments }}</textarea>
+                                </div>
+                                <div class="comment-btns mt-2">
+                                    <button type="button" class="button mr-2" onclick="resetRatingForm('ratingForm')">Cancel</button>
+                                    <button type="submit" class="button ml-2">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="comment-box ml-2">
-                <h4>Your Rating</h4
-                <div class="rating mb-3">
-                    <input type="hidden" name="rating" id="rating">
-                    <label for="star5" class="star" data-rating="5" value="5"><i class="ph-fill ph-star"></i></label>
-                    <label for="star4" class="star" data-rating="4" value="4"><i class="ph-fill ph-star"></i></label>
-                    <label for="star3" class="star" data-rating="3" value="3"><i class="ph-fill ph-star"></i></label>
-                    <label for="star2" class="star" data-rating="2" value="2"><i class="ph-fill ph-star"></i></label>
-                    <label for="star1" class="star" data-rating="1" value="1"><i class="ph-fill ph-star"></i></label>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <!--form to store ratings and reviews in database-->
+    <h2 class="review_title">Reviews</h2>
+    <form action="{% url 'ratings_reviews:save_review' %}" method="POST" id="ratingForm">
+        {% csrf_token %}
+        <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+        <div class="container mt-3">
+            <div class="card p-5">
+                <div class="row align-items-center">
+                    <div class="col-2 mb-3">
+                        <img src="{{ recipe.image.url }}" class="rounded-circle mt-2 w-75 h-75">
+                    </div>
+                    <div class="col-10">
+                        <h3>{{ recipe.title }}</h3>
+                    </div>
                 </div>
-                <h4>Your Review</h4>
-                <div class="comment-area mb-4">
-                    <textarea class="form-control" name="review" placeholder="What is your view?" rows="4"></textarea>
-                </div>
-                <div class="comment-btns mt-2">
-                    <button type="button" class="button mr-2" onclick="resetRatingForm('ratingForm')">Cancel</button>
-                    <button type="submit" class="button ml-2">Submit</button>
+                <div class="comment-box ml-2">
+                    <h4>Your Rating</h4>
+                    <div class="rating mb-3">
+                        <input type="hidden" name="rating" id="rating">
+                        <label for="star5" class="star" data-rating="5"><i class="ph-fill ph-star"></i></label>
+                        <label for="star4" class="star" data-rating="4"><i class="ph-fill ph-star"></i></label>
+                        <label for="star3" class="star" data-rating="3"><i class="ph-fill ph-star"></i></label>
+                        <label for="star2" class="star" data-rating="2"><i class="ph-fill ph-star"></i></label>
+                        <label for="star1" class="star" data-rating="1"><i class="ph-fill ph-star"></i></label>
+                    </div>
+                    <h4>Your Review</h4>
+                    <div class="comment-area mb-4">
+                        <textarea class="form-control" name="review" placeholder="What is your view?" rows="4"></textarea>
+                    </div>
+                    <div class="comment-btns mt-2">
+                        <button type="button" class="button mr-2" onclick="resetRatingForm('ratingForm')">Cancel</button>
+                        <button type="submit" class="button ml-2">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+{% endif %}
+
 
 <script src="{% static 'js/script.js' %}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Select all elements with class 'star' for rating selection
     var stars = document.querySelectorAll('.star');
 
@@ -126,6 +214,11 @@
         });
     });
 });
-S
+
+function showForm() {
+        var form = document.getElementById('updateRating');
+        form.style.display = "block";
+    }
 </script>
+
 {% endblock %}

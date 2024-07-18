@@ -130,7 +130,16 @@
     .star.checked ~ .star {
         color: #F88379;
     }
+    .star_display {
+        display: inline-block;
+        font-size: 40px;
+        color: #ccc;
+    }
     
+    .star_display.checked,
+    .star_display.checked~.star_display{
+        color: #F88379;
+    }
     
     .button{
         background-color: #F88379;

@@ -1,8 +1,9 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, resolve_url
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Review
-from recipe_manager.models import Recipe  # Import your Recipe model
+from recipe_manager.models import Recipe
+import sweetify
 
 
 @login_required(login_url='/login/')
@@ -24,6 +25,23 @@ def save_review(request):
             comments=comments
         )
 
-        messages.success(request, 'Thank you for your review!')
+        sweetify.success(
+            request, "Thank you for your reviews", timer=2000, position='top-end')
 
     return redirect('recipe_manager:recipe_details', recipe_id=recipe_id)
+
+
+@login_required(login_url='/login/')
+def update_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comments = request.POST.get('review')
+
+        # Update existing review object
+        review.ratings = rating
+        review.comments = comments
+        review.save()
+
+    return redirect('{}#review-section'.format(resolve_url('recipe_manager:recipe_details', recipe_id=review.recipe.id)))

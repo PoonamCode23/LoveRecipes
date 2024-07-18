@@ -72,7 +72,7 @@
     {% for review in reviews %}
         <!--ratings and reviews shown if user has already added reviews-->
 
-        <div class="container mt-3 mb-3">
+        <div id="review-section" class="container mt-3 mb-3">
             <ul class="list-group">
                 <div class="col-12 col-lg-8">
                     <li class="list-group-item">
@@ -95,11 +95,13 @@
                                     <input type="hidden" name="rating" id="rating" value="{{ review.rating }}">
                                     <!--add filter is used to convert a string to an integer -->
                                     {% for i in '54321' %}
-                                        <label for="star{{ i }}" class="star {% if review.ratings == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
-                                            
+                                        <label for="star{{ i }}" class="star_display {% if review.ratings == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
                                             <i class="ph-fill ph-star"></i>
                                         </label>
                                     {% endfor %}
+
+                                    <input type="hidden" name="rating" id="rating" value="{{ review.rating }}">
+
                                 </div>
                                 
                             </div>
@@ -115,7 +117,7 @@
 
         <!--form triggerd on clicking on update icon-->
         <div id="updateRating" style="display: none;">
-            <form action="" method="POST" id="updateRatingForm">
+            <form action="{% url 'ratings_reviews:update_review' review.id %}" method="POST" id="updateRatingForm">
                 {% csrf_token %}
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
                 <div class="container mt-3">
@@ -130,19 +132,21 @@
                             <div class="comment-box ml-2">
                                 <h4>Your Rating</h4>
                                 <div class="rating mb-3">
-                                    <input type="hidden" name="rating" id="rating-edit" value="{{ review.rating }}">
-                                    {% for i in "12345" %}
-                                        <label for="star{{ i }}" class="star star-edit" data-rating-edit="{{ i }}" {% if review.rating == i %}data-checked="true"{% endif %}>
-                                            <i class="ph-fill ph-star"></i>
-                                        </label>
-                                    {% endfor %}
+                                    <div class="rating mb-3">
+                                        {% for i in "54321" %}
+                                            <!--class added to hide radio button-->
+
+                                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" {% if review.ratings == i %}checked{% endif %} class="visually-hidden"">
+                                            <label for="star{{ i }}" class="star {% if review.ratings == i %}checked{% endif %}"><i class="ph-fill ph-star"></i></label>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                                 <h4>Your Review</h4>
                                 <div class="comment-area mb-4">
                                     <textarea class="form-control" name="review" placeholder="What is your view?" rows="4">{{ review.comments }}</textarea>
                                 </div>
                                 <div class="comment-btns mt-2">
-                                    <button type="button" class="button mr-2" onclick="resetRatingForm('ratingForm')">Cancel</button>
+                                    <button type="button" class="button mr-2" onclick="resetRatingForm('updateRatingForm')">Cancel</button>
                                     <button type="submit" class="button ml-2">Submit</button>
                                 </div>
                             </div>
@@ -215,9 +219,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
 function showForm() {
         var form = document.getElementById('updateRating');
         form.style.display = "block";
+        window.location.hash = 'updateRating';
     }
 </script>
 

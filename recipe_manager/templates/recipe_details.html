@@ -68,56 +68,51 @@
     </div>
 </div>
 
-{% if reviews %}
-    {% for review in reviews %}
-        <!--ratings and reviews shown if user has already added reviews-->
+{% if my_review %}
+    <!--ratings and reviews shown if user has already added reviews-->
 
-        <div id="review-section" class="container mt-3 mb-3">
-            <ul class="list-group">
-                <div class="col-12 col-lg-8">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-9">
-                                <h3>My Review</h3>
-                            </div>
-                            {% if review.user == request.user %}
-                                <div class="col-3">
-                                    <button type="button" class="editicon" onclick="showForm('updateRating')">
-                                        <i class="ph-fill ph-pencil"></i>Edit
-                                    </button>
-                                </div>
-                            {% endif %}
+    <div id="review-section" class="container mt-4 mb-5 myreview-container">
+        <ul class="list-group">
+            <div class="col-12 col-lg-8">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-9">
+                            <h3>My Review</h3>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <div class="rating mb-3">
-                                    <!-- ratings is a field in the database table -->
-                                    <input type="hidden" name="rating" id="rating" value="{{ review.rating }}">
-                                    <!--add filter is used to convert a string to an integer -->
-                                    {% for i in '54321' %}
-                                        <label for="star{{ i }}" class="star_display {% if review.ratings == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
-                                            <i class="ph-fill ph-star"></i>
-                                        </label>
-                                    {% endfor %}
-
-                                    <input type="hidden" name="rating" id="rating" value="{{ review.rating }}">
-
-                                </div>
-                                
+                        {% if my_review.user == request.user %}
+                            <div class="col-3">
+                                <button type="button" class="editicon" onclick="showForm('updateRating')">
+                                    <i class="ph-fill ph-pencil"></i>Edit
+                                </button>
                             </div>
-                            <div class="col-6">
-                                <p>{{ review.created_at|date:"F j, Y" }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <div class="rating mb-3">
+                                <!-- ratings is a field in the database table -->
+                                <input type="hidden" name="rating" id="rating" value="{{ my_review.ratings }}">
+                                <!--add filter is used to convert a string to an integer -->
+                                {% for i in '54321' %}
+                                    <label for="star{{ i }}" class="star_display {% if my_review.ratings == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                                        <i class="ph-fill ph-star"></i>
+                                    </label>
+                                {% endfor %}
                             </div>
-                            <p class="fs-4">{{ review.comments }}</p>
                         </div>
-                    </li>
-                </div>
-            </ul>
-        </div>
+                        <div class="col-6">
+                            <p>{{ my_review.created_at|date:"F j, Y" }}</p>
+                        </div>
+                        <p class="fs-4">{{ my_review.comments }}</p>
+                    </div>
+                </li>
+            </div>
+        </ul>
+    </div>
 
         <!--form triggerd on clicking on update icon-->
         <div id="updateRating" style="display: none;">
-            <form action="{% url 'ratings_reviews:update_review' review.id %}" method="POST" id="updateRatingForm">
+            <form action="{% url 'ratings_reviews:update_review' my_review.id %}" method="POST" id="updateRatingForm">
                 {% csrf_token %}
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
                 <div class="container mt-3">
@@ -137,13 +132,13 @@
                                             <!--class added to hide radio button-->
 
                                             <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" {% if review.ratings == i %}checked{% endif %} class="visually-hidden"">
-                                            <label for="star{{ i }}" class="star {% if review.ratings == i %}checked{% endif %}"><i class="ph-fill ph-star"></i></label>
+                                            <label for="star{{ i }}" class="star {% if my_review.ratings == i %}checked{% endif %}"><i class="ph-fill ph-star"></i></label>
                                         {% endfor %}
                                     </div>
                                 </div>
                                 <h4>Your Review</h4>
                                 <div class="comment-area mb-4">
-                                    <textarea class="form-control" name="review" placeholder="What is your view?" rows="4">{{ review.comments }}</textarea>
+                                    <textarea class="form-control" name="review" placeholder="What is your view?" rows="4">{{ my_review.comments }}</textarea>
                                 </div>
                                 <div class="comment-btns mt-2">
                                     <button type="button" class="button mr-2" onclick="resetRatingForm('updateRatingForm')">Cancel</button>
@@ -155,7 +150,7 @@
                 </div>
             </form>
         </div>
-    {% endfor %}
+    
 {% else %}
     <!--form to store ratings and reviews in database-->
     <h2 class="review_title">Reviews</h2>
@@ -194,6 +189,37 @@
             </div>
         </div>
     </form>
+{% endif %}
+
+{% if reviews  %}
+<div class="container mt-3 mb-3">
+    <h3>Ratings and Reviews</h3>
+        <ul class="list-group">
+            <div class="col-12 col-lg-8">
+                {% for review in reviews %}
+                <li class="list-group-item" >
+                    <p class="text">Reviewed by: <a href="{% url 'users:view_user_recipes' review.user_id %}" class="user_link">{{review.user.username }}</a></p> 
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="rating mb-3">
+                                <input type="hidden" name="rating" id="rating">
+                                {% for i in '54321' %}
+                                <label for="star{{ i }}" class="star_display {% if review.ratings == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                                    <i class="ph-fill ph-star"></i>
+                                </label>
+                            {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p>{{ review.created_at|date:"F j, Y" }}</p> 
+                        </div>
+                        <p class="fs-4">{{ review.comments }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+        </ul>
+</div>
+
 {% endif %}
 
 

@@ -148,14 +148,16 @@ def recipe_details(request, recipe_id):
     ingredients = json.loads(recipe.ingredients)
     directions = json.loads(recipe.directions)
 
-    reviews = Review.objects.filter(recipe=recipe)
+    reviews = Review.objects.filter(recipe=recipe).exclude(user=request.user)
+    my_review = Review.objects.filter(recipe=recipe, user=request.user).first()
 
     context = {
         'recipe': recipe,
         'ingredients': ingredients,
         'directions': directions,
         'title': title,
-        'reviews': reviews
+        'reviews': reviews,
+        'my_review': my_review
     }
 
     return render(request, 'recipe_details.html', context)

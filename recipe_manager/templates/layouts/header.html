@@ -40,6 +40,12 @@
                                     <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                                         <li><a class="dropdown-item" href="#">My Profile</a></li>
                                         <li>
+                                            <a class="dropdown-item" href="">
+                                                My Reviews
+                                                <span class="badge bg-primary">{{ comment_count }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
                                             <form method="POST" action="{% url 'users:user_logout' %}">
                                                 {% csrf_token %}
                                                 <button type="submit" class="dropdown-item btn bg-none border-none fs-6">Log Out</button>

@@ -8,6 +8,7 @@ from django.conf import settings  # for deleting image file
 import os  # deleting media folder
 from save_recipe.models import Favorite
 from ratings_reviews.models import Review
+from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 import json
 import sweetify
@@ -94,23 +95,30 @@ def update_recipe(request, recipe_id):
 def view_recipes(request):
     title = 'LoveRecipes'
     user = request.user
-    # Order by descending created_at (latest)
-    latest_recipes = Recipe.objects.order_by('-created_at')[:6]
 
-    # Fetch random recipes
+    latest_recipes = Recipe.objects.order_by('-created_at')[:6]
     recipes = Recipe.objects.order_by('?')
 
     message = ""
 
     tag = request.GET.get('tag')
     if tag:
-        # SELECT * FROM Recipe WHERE tags ILIKE '%desserts%';
         recipes = Recipe.objects.filter(tags__icontains=tag).order_by('?')
         message = f"Explore '{tag.upper()}' Recipes"
 
-        # dont show latest recipes if a tag is present
+        # Don't show latest recipes if a tag is present
         latest_recipes = []
 
+    # average rating and review count for each recipe
+    for recipe in recipes:
+        average_rating = recipe.review_set.aggregate(Avg('ratings'))[
+            'ratings__avg']
+        review_count = recipe.review_set.count()
+
+        recipe.average_rating = average_rating
+        recipe.review_count = review_count
+
+    # Paginate the recipes
     paginator = Paginator(recipes, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -126,11 +134,14 @@ def view_recipes(request):
             'user': recipe.user.username if recipe.user.is_authenticated else 'Anonymous',
             'user_id': recipe.user.id if recipe.user.is_authenticated else None,
             'is_favorite': False,
+            'average_rating': recipe.average_rating,
+            'review_count': recipe.review_count,
         }
         if user.is_authenticated:
             recipe_data['is_favorite'] = Favorite.objects.filter(
                 user=user, recipe=recipe).exists()
         recipe_list.append(recipe_data)
+
     context = {
         'recipes': recipe_list,
         'page_obj': page_obj,
@@ -138,6 +149,7 @@ def view_recipes(request):
         'title': title,
         'tag_message': message
     }
+
     return render(request, 'home_recipes.html', context)
 
 

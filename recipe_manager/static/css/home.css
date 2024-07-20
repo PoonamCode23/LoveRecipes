@@ -147,6 +147,10 @@
     height: 100%;
     object-fit: cover;
   }
+  .card-img-top {
+    width: 100%;
+    object-fit: cover;
+  }
   
     .image-wrapper {
       width: 100%;
@@ -154,6 +158,7 @@
       border-radius: 50%;
       overflow: hidden;
     }
+    
   
   .recent_recipe_title, .other_recipe_title{
       text-align: center;
@@ -188,3 +193,24 @@
     .custom-tooltip {
       --bs-tooltip-bg: red;
     }
+
+    .star_display {
+        display: inline-block;
+        font-size: 20px;
+        color: #ccc;
+    }
+    
+    .star_display.checked,
+    .star_display.checked~.star_display{
+        color: #F88379;
+    }
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+   
+      

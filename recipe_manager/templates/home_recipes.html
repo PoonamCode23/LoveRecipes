@@ -29,7 +29,7 @@
                 <div class="card mb-3 custom-card">
                     <a href="{% url 'recipe_manager:recipe_details' latest_recipe.id %}" class="recipe-link">
                         <div class="image-wrapper">
-                            <img class="card-img-top custom-card-img" src="{{ latest_recipe.image.url }}" alt="Card image cap">
+                            <img class="custom-card-img" src="{{ latest_recipe.image.url }}" alt="Recipe Image">
                         </div>
                     </a>
                     <div class="card-body">
@@ -89,6 +89,31 @@
                             </form>
                         {% endif %}
                         </div>
+
+                        <div class="d-flex justify-content-between">
+                            {% if recipe.average_rating %}
+                                <div class="col-6">
+                                    <div class="rating mb-3" id="star-ratings">
+                                        {% for i in '54321' %}
+                                        <label for="star{{ i }}" class="star_display {% if recipe.average_rating == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                                            <i class="ph-fill ph-star"></i>
+                                        </label>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        
+                            <p>
+                                {% if recipe.review_count == 1 %}
+                                    {{ recipe.review_count }} Review
+                                {% elif recipe.review_count > 1 %}
+                                    {{ recipe.review_count }} Reviews
+                                {% endif %}
+
+                            </p>
+                        </div>
+                        
+                        
                             <p class="card-text">{{ recipe.description }}</p>
                             <div class="username">
                                 Recipe By: <a href="{% url 'users:view_user_recipes' recipe.user_id %}" class="recipe-link">{{ recipe.user }}</a>

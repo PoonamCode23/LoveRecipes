@@ -95,7 +95,7 @@
                                 <div class="col-6">
                                     <div class="rating mb-3" id="star-ratings">
                                         {% for i in '54321' %}
-                                        <label for="star{{ i }}" class="star_display {% if recipe.average_rating == i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                                        <label for="star{{ i }}" class="star_display {% if recipe.average_rating >= i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
                                             <i class="ph-fill ph-star"></i>
                                         </label>
                                     {% endfor %}

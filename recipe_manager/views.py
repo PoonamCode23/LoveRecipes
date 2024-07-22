@@ -8,7 +8,9 @@ from django.conf import settings  # for deleting image file
 import os  # deleting media folder
 from save_recipe.models import Favorite
 from ratings_reviews.models import Review
+from ratings_reviews.models import Like
 from django.db.models import Avg
+from django.db.models.functions import Round
 from django.contrib.auth.decorators import login_required
 import json
 import sweetify
@@ -97,7 +99,7 @@ def view_recipes(request):
     user = request.user
 
     latest_recipes = Recipe.objects.order_by('-created_at')[:6]
-    recipes = Recipe.objects.order_by('?')
+    recipes = Recipe.objects.order_by('created_at')
 
     message = ""
 
@@ -111,9 +113,12 @@ def view_recipes(request):
 
     # average rating and review count for each recipe
     for recipe in recipes:
-        average_rating = recipe.review_set.aggregate(Avg('ratings'))[
-            'ratings__avg']
+        # function from django.db.models.functions is designed for use within database queries, not directly on Python variables
+        average_rating = recipe.review_set.aggregate(
+            rounded_avg=Round(Avg('ratings')))['rounded_avg']
         review_count = recipe.review_set.count()
+
+        # recipe obj sud have attributes like average_rating and review_count to be displayed in template
 
         recipe.average_rating = average_rating
         recipe.review_count = review_count
@@ -160,8 +165,32 @@ def recipe_details(request, recipe_id):
     ingredients = json.loads(recipe.ingredients)
     directions = json.loads(recipe.directions)
 
-    reviews = Review.objects.filter(recipe=recipe).exclude(user=request.user)
-    my_review = Review.objects.filter(recipe=recipe, user=request.user).first()
+    my_review = None
+
+    if request.user.is_authenticated:
+        # Retrieve reviews and my review for the recipe
+        reviews = Review.objects.filter(
+            recipe=recipe).exclude(user=request.user)
+        my_review = Review.objects.filter(
+            recipe=recipe, user=request.user).first()
+
+        # Attach like status and count to each review
+        for review in reviews:
+            review.liked_by_user = Like.objects.filter(
+                review=review, user=request.user).exists()
+            review.likes_count = Like.objects.filter(review=review).count()
+
+        if my_review:
+            # attach like status and count to the user's own review
+            my_review.liked_by_user = Like.objects.filter(
+                review=my_review, user=request.user).exists()
+            my_review.likes_count = Like.objects.filter(
+                review=my_review).count()
+
+    else:
+        reviews = Review.objects.filter(recipe=recipe)
+        for review in reviews:
+            review.likes_count = Like.objects.filter(review=review).count()
 
     context = {
         'recipe': recipe,

@@ -52,6 +52,9 @@
 from django.shortcuts import render
 from recipe_manager.models import Recipe
 from save_recipe.models import Favorite
+from django.db.models import Avg
+from django.db.models.functions import Round
+from ratings_reviews.models import Review
 import json
 
 
@@ -71,6 +74,15 @@ def search_recipes(request):
         search_message = f"No results found for '{
             keyword}'.... Please try searching other recipes."
 
+    for recipe in recipes:
+        # function from django.db.models.functions is designed for use within database queries, not directly on Python variables
+        average_rating = recipe.review_set.aggregate(
+            rounded_avg=Round(Avg('ratings')))['rounded_avg']
+        review_count = recipe.review_set.count()
+
+        recipe.average_rating = average_rating
+        recipe.review_count = review_count
+
     recipe_list = []
     for recipe in recipes:
         recipe_data = {
@@ -81,6 +93,8 @@ def search_recipes(request):
             'tags': json.loads(recipe.tags) if recipe.tags else [],
             'user_id': recipe.user.id,
             'user': recipe.user.username,
+            'average_rating': recipe.average_rating,
+            'review_count': recipe.review_count,
         }
 
         if request.user.is_authenticated:

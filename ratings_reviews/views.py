@@ -2,6 +2,7 @@ from django.shortcuts import redirect, get_object_or_404, resolve_url
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Review
+from .models import Like
 from recipe_manager.models import Recipe
 import sweetify
 
@@ -45,3 +46,19 @@ def update_review(request, review_id):
         review.save()
 
     return redirect('{}#review-section'.format(resolve_url('recipe_manager:recipe_details', recipe_id=review.recipe.id)))
+
+
+@login_required(login_url='/login/')
+def like_review(request, review_id, recipe_id):
+    review = get_object_or_404(Review, id=review_id)
+    user = request.user
+
+    if request.method == 'POST':
+        existing_like = Like.objects.filter(review=review, user=user).first()
+
+        if existing_like:
+            existing_like.delete()
+        else:
+            Like.objects.create(review=review, user=user)
+
+    return redirect('{}#like-form'.format(resolve_url('recipe_manager:recipe_details', recipe_id=recipe_id)))

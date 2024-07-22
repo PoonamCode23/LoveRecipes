@@ -104,6 +104,14 @@
                             <p>{{ my_review.created_at|date:"F j, Y" }}</p>
                         </div>
                         <p class="fs-4">{{ my_review.comments }}</p>
+
+                        <form id="like-form" action="{% url 'ratings_reviews:like_review' my_review.id recipe.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="like-button {% if my_review.liked_by_user %}checked{% endif %}">
+                                <i class="ph-fill ph-thumbs-up thumbs-up-icon"></i>
+                                <span class="ms-2"></span> ({{ my_review.likes_count }})
+                            </button>
+                        </form>
                     </div>
                 </li>
             </div>
@@ -157,7 +165,7 @@
     <form action="{% url 'ratings_reviews:save_review' %}" method="POST" id="ratingForm">
         {% csrf_token %}
         <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-        <div class="container mt-3">
+        <div class="container mt-3 ">
             <div class="card p-5">
                 <div class="row align-items-center">
                     <div class="col-2 mb-3">
@@ -193,11 +201,11 @@
 
 {% if reviews  %}
 <div class="container mt-3 mb-3">
-    <h3>Ratings and Reviews</h3>
+    <h3 class="mb-4">Ratings and Reviews</h3>
         <ul class="list-group">
             <div class="col-12 col-lg-8">
                 {% for review in reviews %}
-                <li class="list-group-item" >
+                <li class="list-group-item p-4" >
                     <p class="text">Reviewed by: <a href="{% url 'users:view_user_recipes' review.user_id %}" class="user_link">{{review.user.username }}</a></p> 
                     <div class="row">
                         <div class="col-6">
@@ -215,8 +223,18 @@
                         </div>
                         <p class="fs-4">{{ review.comments }}</p>
                     </div>
+                    <form id="like-form" action="{% url 'ratings_reviews:like_review' review.id recipe.id %}" method="POST">
+
+                        {% csrf_token %}
+                        <button type="submit" class="like-button ">
+                            <i class="ph-fill ph-thumbs-up thumbs-up-icon"></i>
+                            <!--ms = margin start-->
+                           <span class ="ms-2"></span> (0)</span>
+                        </button>
+                    </form>
                 </li>
                 {% endfor %}
+            </div>
         </ul>
 </div>
 

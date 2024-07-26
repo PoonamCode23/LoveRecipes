@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1 # Added to login in the admin panel
 
 # Application definition
 

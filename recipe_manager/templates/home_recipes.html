@@ -47,13 +47,53 @@
             {% endfor %}
         </div>
 
+        {% if top_rated_recipes %}
+        <div class="row top-rated-recipes mb-5">
+            <h3 class="mb-5">Top-Rated Recipes</h3>
+            <div class="row">
+                {% for top_rated_recipe in top_rated_recipes %}
+                <div class="col-md-3">
+                    <div class="top-recipes-card">
+                        <a href="{% url 'recipe_manager:recipe_details' top_rated_recipe.id %}" class="recipe-link">
+                            <img class="top-rated-recipes-image mb-4"
+                            src="{{ top_rated_recipe.image.url }}" alt="Recipe Image">
+                            
+                        </a>
+                        <div class="card-body">
+                            <h5 class="top-recipeTitle mb-3">{{ top_rated_recipe.title }}</h5>
+                            {% if top_rated_recipe.average_rating %}
+                            <div class="rating mb-3" id="star-ratings">
+                                {% for i in '54321' %}
+                                <label for="star{{ i }}" class="star_display {% if top_rated_recipe.average_rating >= i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                                    <i class="ph-fill ph-star"></i>
+                                </label>
+                                {% endfor %}
+                            </div>
+                            {%endif%}
+                            <p class = "reviews">{{ top_rated_recipe.review_count }} Reviews</p>
+                           
+                            <p class="top_recipe_username">
+                                Recipe by 
+                                <a href="{% url 'users:view_user_recipes' top_rated_recipe.user_id %}" class="recipe-link">
+                                    {{ top_rated_recipe.user.username }}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+   
     
     
         {% if recipes %}
         {% if tag_message %}
             <h3 class="mb-4">{{ tag_message }}</h3>
         {% elif not keyword %}
-            <h3 class="other_recipe_title mb-4">Other Recipes</h3>
+            <h3 class="other_recipe_title mb-5">Other Recipes</h3>
         {% endif %}
         {% endif %}
     
@@ -64,8 +104,9 @@
                     <div class="card mb-3">
                         <img class="card-img-top" style="width: 100%; height: 45%; object-fit: cover;"
                              src="{{ recipe.image.url }}" alt="Recipe Image">
-                        <div class="card-body">
-                            
+
+
+                        <div class="card-body">     
                         <div class="d-flex justify-content-between">
                             <h4 class="card-title recipe-title">{{ recipe.title }}</h4>
                             {# template does not support calling methods directly in templates. needs to be performed in the view and the result passed to the template context #}

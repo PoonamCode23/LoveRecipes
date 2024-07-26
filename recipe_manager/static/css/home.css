@@ -1,4 +1,4 @@
-/*for home page*/
+for home page
 .button {
     color: white;
     background-color:#F88379;
@@ -160,7 +160,7 @@
     }
     
   
-  .recent_recipe_title, .other_recipe_title{
+  .recent_recipe_title, .other_recipe_title, .top-rated-recipes{
       text-align: center;
       color: #a51508;
       
@@ -213,4 +213,47 @@
     }
 
    
-      
+     /*top-rated-recipes*/
+    
+    
+    .top-recipeTitle{
+        text-align: center;
+        margin-bottom: 1rem;
+        color: black;
+        
+    }
+    
+    .top-rated-recipes .rating {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .top-rated-recipes .rating .star_display {
+        font-size: 1.5rem;
+        margin: 0 2px;
+    }
+    .top-rated-recipes-image{
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        border-radius: 10px;
+
+    }
+    .reviews{
+        color: black;
+    }
+    
+    .top_recipe_username{
+        color:black;
+    }
+    
+    .row{
+        margin-bottom: 50px;
+    }
+    
+
+    
+    
+    

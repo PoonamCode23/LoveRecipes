@@ -226,10 +226,10 @@
                     <form id="like-form" action="{% url 'ratings_reviews:like_review' review.id recipe.id %}" method="POST">
 
                         {% csrf_token %}
-                        <button type="submit" class="like-button ">
+                        <button type="submit" class=" like-button {% if review.liked_by_user %}checked{% endif %}">
                             <i class="ph-fill ph-thumbs-up thumbs-up-icon"></i>
                             <!--ms = margin start-->
-                           <span class ="ms-2"></span> (0)</span>
+                           <span class ="ms-2"></span> ({{review.likes_count}})</span>
                         </button>
                     </form>
                 </li>

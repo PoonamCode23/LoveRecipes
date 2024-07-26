@@ -9,7 +9,7 @@ import os  # deleting media folder
 from save_recipe.models import Favorite
 from ratings_reviews.models import Review
 from ratings_reviews.models import Like
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.db.models.functions import Round
 from django.contrib.auth.decorators import login_required
 import json
@@ -99,7 +99,13 @@ def view_recipes(request):
     user = request.user
 
     latest_recipes = Recipe.objects.order_by('-created_at')[:6]
+
     recipes = Recipe.objects.order_by('created_at')
+
+    top_rated_recipes = Recipe.objects.annotate(
+        review_count=Count('review'),
+        average_rating=Avg('review__ratings')
+    ).filter(average_rating__gt=3).order_by('-average_rating')[:4]
 
     message = ""
 
@@ -141,6 +147,7 @@ def view_recipes(request):
             'is_favorite': False,
             'average_rating': recipe.average_rating,
             'review_count': recipe.review_count,
+
         }
         if user.is_authenticated:
             recipe_data['is_favorite'] = Favorite.objects.filter(
@@ -152,7 +159,8 @@ def view_recipes(request):
         'page_obj': page_obj,
         'latest_recipes': latest_recipes,
         'title': title,
-        'tag_message': message
+        'tag_message': message,
+        'top_rated_recipes': top_rated_recipes
     }
 
     return render(request, 'home_recipes.html', context)

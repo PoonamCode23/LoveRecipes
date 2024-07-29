@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'save_recipe',
     'ratings_reviews',
+    'rest_framework',
     'sweetify',
     'django.contrib.sites',
     'allauth',

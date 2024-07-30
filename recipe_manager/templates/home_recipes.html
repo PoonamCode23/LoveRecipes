@@ -18,73 +18,71 @@
         </div>
         {% endif %}
 
-        {% if latest_recipes and not keyword%}
-        <h3 class="recent_recipe_title">Our Recent Recipes</h3>
-    {% endif %}
-    
-   
-        <div class="row">
-            {% for latest_recipe in latest_recipes %}
-            <div class="col-md-2">
-                <div class="card mb-3 custom-card">
-                    <a href="{% url 'recipe_manager:recipe_details' latest_recipe.id %}" class="recipe-link">
-                        <div class="image-wrapper">
-                            <img class="custom-card-img" src="{{ latest_recipe.image.url }}" alt="Recipe Image">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title mb-3 mx-auto">{{ latest_recipe.title }}</h5>
-                        </div>
-                        <p class="latest_recipe_username">Recipe by 
-                            <a href="{% url 'users:view_user_recipes' latest_recipe.user_id %}" class="recipe-link">
-                                {{ latest_recipe.user.username }}
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        {% if latest_recipes and not keyword %}
+    <h3 class="recent_recipe_title">Our Recent Recipes</h3>
+{% endif %}
 
-        {% if top_rated_recipes %}
-        <div class="row top-rated-recipes mb-5">
-            <h3 class="mb-5">Top-Rated Recipes</h3>
-            <div class="row">
-                {% for top_rated_recipe in top_rated_recipes %}
-                <div class="col-md-3">
-                    <div class="top-recipes-card">
-                        <a href="{% url 'recipe_manager:recipe_details' top_rated_recipe.id %}" class="recipe-link">
-                            <img class="top-rated-recipes-image mb-4"
-                            src="{{ top_rated_recipe.image.url }}" alt="Recipe Image">
-                            
-                        </a>
-                        <div class="card-body">
-                            <h5 class="top-recipeTitle mb-3">{{ top_rated_recipe.title }}</h5>
-                            {% if top_rated_recipe.average_rating %}
-                            <div class="rating mb-3" id="star-ratings">
-                                {% for i in '54321' %}
-                                <label for="star{{ i }}" class="star_display {% if top_rated_recipe.average_rating >= i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
-                                    <i class="ph-fill ph-star"></i>
-                                </label>
-                                {% endfor %}
-                            </div>
-                            {%endif%}
-                            <p class = "reviews">{{ top_rated_recipe.review_count }} Reviews</p>
-                           
-                            <p class="top_recipe_username">
-                                Recipe by 
-                                <a href="{% url 'users:view_user_recipes' top_rated_recipe.user_id %}" class="recipe-link">
-                                    {{ top_rated_recipe.user.username }}
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+<div class="row">
+    {% for latest_recipe in latest_recipes %}
+    <div class="col-md-2">
+        <div class="card mb-3 custom-card">
+            <a href="{% url 'recipe_manager:recipe_details' latest_recipe.id %}" class="recipe-link">
+                <div class="image-wrapper">
+                    <img class="custom-card-img" src="{{ latest_recipe.image.url }}" alt="Recipe Image">
                 </div>
-                {% endfor %}
+            </a>
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title mb-3 mx-auto">{{ latest_recipe.title }}</h5>
+                </div>
+                <p class="latest_recipe_username">Recipe by 
+                    <a href="{% url 'users:view_user_recipes' latest_recipe.user_id %}" class="recipe-link">
+                        {{ latest_recipe.user.username }}
+                    </a>
+                </p>
             </div>
         </div>
-        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+{% if top_rated_recipes and not tag %}    
+<!-- y keyword here-->
+    <h3 class="top-rated-recipes">Top-Rated Recipes</h3>
+    <div class="row top-rated-recipes mb-5">
+        {% for top_rated_recipe in top_rated_recipes %}
+        <div class="col-md-3">
+            <div class="top-recipes-card">
+                <a href="{% url 'recipe_manager:recipe_details' top_rated_recipe.id %}" class="recipe-link">
+                    <img class="top-rated-recipes-image mb-4"
+                         src="{{ top_rated_recipe.image.url }}" alt="Recipe Image">
+                </a>
+                <div class="card-body">
+                    <h5 class="top-recipeTitle mb-3">{{ top_rated_recipe.title }}</h5>
+                    {% if top_rated_recipe.average_rating %}
+                    <div class="rating mb-3" id="star-ratings">
+                        {% for i in '54321' %}
+                        <label for="star{{ i }}" class="star_display {% if top_rated_recipe.average_rating >= i|add:0 %}checked{% endif %}" data-rating="{{ i }}">
+                            <i class="ph-fill ph-star"></i>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <p class="reviews">{{ top_rated_recipe.review_count }} Reviews</p>
+                    <p class="top_recipe_username">
+                        Recipe by 
+                        <a href="{% url 'users:view_user_recipes' top_rated_recipe.user_id %}" class="recipe-link">
+                            {{ top_rated_recipe.user.username }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+       
 
    
     

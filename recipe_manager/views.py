@@ -160,7 +160,8 @@ def view_recipes(request):
         'latest_recipes': latest_recipes,
         'title': title,
         'tag_message': message,
-        'top_rated_recipes': top_rated_recipes
+        'top_rated_recipes': top_rated_recipes,
+        'tag': tag
     }
 
     return render(request, 'home_recipes.html', context)
